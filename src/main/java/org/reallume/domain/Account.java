@@ -1,8 +1,7 @@
 package org.reallume.domain;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 
 @Entity

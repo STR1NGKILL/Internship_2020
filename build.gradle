@@ -1,9 +1,22 @@
-plugins {
-    id 'java'
-    id 'org.liquibase.gradle' version '2.0.3'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+        classpath('org.postgresql:postgresql:42.2.2')
+        classpath 'org.liquibase:liquibase-core:3.4.1'
+        classpath "org.liquibase:liquibase-gradle-plugin:1.1.1"
+    }
 }
 
-group 'org.example'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'liquibase'
+
+
+group 'org.reallume'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -14,25 +27,43 @@ repositories {
 dependencies {
     //spring-boot-starter
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.1.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.1.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
 
     //thymeleaf
-    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    //compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.1.RELEASE'
 
     //postgresql
+    runtime('org.postgresql:postgresql')
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
     runtime('org.postgresql:postgresql')
 
     //liquibase
+    compile('org.liquibase:liquibase-core')
 
-
+    //hibernate
+    compile "org.hibernate:hibernate:3.5.4-Final"
+    compile "org.hibernate:hibernate-core:5.2.1.Final"
 
 }
+
+def changeLog = "$projectDir/src/main/resources/db/changelog/changelog-master.xml"
+
+liquibase {
+    activities {
+        main {
+            changeLogFile changeLog
+            url 'jdbc:postgresql://localhost:5432/Company'
+            username 'postgres'
+            password '41456365'
+        }
+    }
+}
+
 
 wrapper {
     gradleVersion = '6.5.1'

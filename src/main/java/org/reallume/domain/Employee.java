@@ -1,8 +1,7 @@
 package org.reallume.domain;
 
 import javax.persistence.*;
-import com.sun.istack.NotNull;
-
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "employees")

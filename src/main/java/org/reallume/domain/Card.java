@@ -1,7 +1,6 @@
 package org.reallume.domain;
 
-import com.sun.istack.NotNull;
-
+import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import java.util.Calendar;
 
