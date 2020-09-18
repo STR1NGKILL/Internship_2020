@@ -19,8 +19,8 @@
                 schemaName=''>
             <where>login='str'</where>
         </delete>
-    </changeSet>-->
-
+    </changeSet>
+-->
 
 
 </databaseChangeLog>

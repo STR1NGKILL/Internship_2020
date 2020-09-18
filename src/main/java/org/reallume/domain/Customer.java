@@ -3,10 +3,11 @@ package org.reallume.domain;
 import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
-@Table(name = "clients")
-public class Client {
+@Table(name = "customers")
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +25,16 @@ public class Client {
     @NotNull
     private Calendar birthday;
 
-    public Client(){}
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Account> accounts;
 
-    public Client(String firstName, String secondName, String patronymic, byte[] document, Calendar birthday) {
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Card> cards;
+
+
+    public Customer(){}
+
+    public Customer(String firstName, String secondName, String patronymic, byte[] document, Calendar birthday) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.patronymic = patronymic;
@@ -77,4 +85,22 @@ public class Client {
     public void setBirthday(Calendar birthday) {
         this.birthday = birthday;
     }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+
 }

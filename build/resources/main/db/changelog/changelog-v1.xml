@@ -9,9 +9,9 @@
        <addColumn
                schemaName="Company"
                tableName="employees">
-            <column name="salt" type="character varying(255)"/>
+            <column name="salt2" type="character varying(255)"/>
        </addColumn>
-   </changeSet>-->
+   </changeSet>
 
     <changeSet id="1" author="str1ng">
         <delete
@@ -20,7 +20,7 @@
             <where>login='str'</where>
         </delete>
     </changeSet>
-
+-->
 
 
 </databaseChangeLog>

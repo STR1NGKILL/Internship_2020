@@ -24,6 +24,14 @@ public class Card {
     @NotNull
     private boolean status;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private Customer customer;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="account_id")
+    private Account account;
+
     public Card(){}
 
     public Card(String number, Calendar openDate, Calendar closeDate, boolean status) {
@@ -67,5 +75,21 @@ public class Card {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

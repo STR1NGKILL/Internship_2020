@@ -16,9 +16,6 @@ public class Account {
     private String number;
 
     @NotNull
-    private byte currencyNumber;
-
-    @NotNull
     private long currencyQuantity;
 
     @NotNull
@@ -30,11 +27,24 @@ public class Account {
     @NotNull
     private boolean status;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private Customer customer;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="card_id")
+    private Card card;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="currency_id")
+    private Currency currency;
+
     public Account(){}
 
-    public Account(String number, byte currencyNumber, long currencyQuantity, Calendar accountOpenDate, Calendar accountCloseDate, boolean accountStatus) {
+    public Account(String number, Currency currency, long currencyQuantity, Calendar accountOpenDate, Calendar accountCloseDate, boolean accountStatus) {
         this.number = number;
-        this.currencyNumber = currencyNumber;
+        this.currency = currency;
         this.currencyQuantity = currencyQuantity;
         this.openDate = accountOpenDate;
         this.closeDate = accountCloseDate;
@@ -51,14 +61,6 @@ public class Account {
 
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    public byte getCurrencyNumber() {
-        return currencyNumber;
-    }
-
-    public void setCurrencyNumber(byte currencyNumber) {
-        this.currencyNumber = currencyNumber;
     }
 
     public long getCurrencyQuantity() {
@@ -92,4 +94,30 @@ public class Account {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+
 }
