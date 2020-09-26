@@ -1,2 +1,4 @@
 rootProject.name = 'Company'
+include 'Employee-app'
+include 'Employee-app'
 

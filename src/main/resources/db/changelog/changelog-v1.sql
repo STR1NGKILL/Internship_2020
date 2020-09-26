@@ -22,4 +22,3 @@ values (
 );
 --rollback delete from employees where login = 'str1ng';
 
-<!--liquibase rollbackOneUpdate --deploymentId=1101884457-->

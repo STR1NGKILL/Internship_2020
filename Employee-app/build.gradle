@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+group 'org.reallume'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    //spring-boot-starter
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.1.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.1.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
+
+    //thymeleaf
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.1.RELEASE'
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+    
+    //postgresql
+    runtime('org.postgresql:postgresql')
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+    runtime('org.postgresql:postgresql')
+
+    //hibernate
+    compile "org.hibernate:hibernate:3.5.4-Final"
+    compile "org.hibernate:hibernate-core:5.2.1.Final"
+
+}
