@@ -36,6 +36,7 @@ public class Account {
     @JoinColumn(name="card_id")
     private Card card;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="currency_id")
     private Currency currency;

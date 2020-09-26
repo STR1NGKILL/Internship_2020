@@ -1,0 +1,19 @@
+# User-specific stuff:
+.idea/workspace.xml
+/local.properties
+
+# From https://github.com/github/gitignore/blob/master/Gradle.gitignore
+.gradle
+/lib/
+/build/
+
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+

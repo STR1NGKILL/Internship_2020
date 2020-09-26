@@ -24,10 +24,12 @@ public class Card {
     @NotNull
     private boolean status;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Customer customer;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="account_id")
     private Account account;
