@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<DefaultActions>
+    <Action>
+        <Id>0</Id>
+        <Name>Create and delete rights</Name>
+        <Description>Creating and deleting of employee rights</Description>
+    </Action>
+    <Action>
+        <Id>1</Id>
+        <Name>Create and delete action</Name>
+        <Description>Creating and deleting of action of rights</Description>
+    </Action>
+    <Action>
+        <Id>2</Id>
+        <Name>Set rights</Name>
+        <Description>Set rights to employee</Description>
+    </Action>
+    <Action>
+        <Id>3</Id>
+        <Name>Block an employee</Name>
+        <Description>Do block account of employee</Description>
+    </Action>
+
+</DefaultActions>

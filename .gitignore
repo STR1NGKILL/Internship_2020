@@ -2,10 +2,13 @@
 .idea/workspace.xml
 /local.properties
 
-# From https://github.com/github/gitignore/blob/master/Gradle.gitignore
+# Directories
 .gradle
 /lib/
 /build/
+/Employee-app/build
+/buildSrc/build
+/buildSrc/.gradle
 
 # Gradle:
 .idea/gradle.xml

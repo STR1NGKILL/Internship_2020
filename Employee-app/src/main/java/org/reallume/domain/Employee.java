@@ -13,15 +13,22 @@ public class Employee {
 
     @NotNull
     private String  firstName,
-                    secondName,
-                    patronymic;
+            secondName,
+            patronymic;
 
     @NotNull
     private String login;
+
     @NotNull
     private String password;
+
     @NotNull
     private String salt;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="rights_id")
+    private Rights rights;
+
 
     public Employee() { }
 
@@ -32,6 +39,10 @@ public class Employee {
         this.login = login;
         this.password = password;
         this.salt = salt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -84,5 +95,13 @@ public class Employee {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Rights getRights() {
+        return rights;
+    }
+
+    public void setRights(Rights rights) {
+        this.rights = rights;
     }
 }

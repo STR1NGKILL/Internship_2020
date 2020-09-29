@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление прав</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+    <div>
+        <h2>Схемы прав пользователей</h2>
+    </div>
+
+    <form th:action="@{/rights/create}" th:method="post" >
+        <label>Добавить схему</label>
+        <input required type="text" th:name="rights_name" placeholder="Введите название" style="width: 180px"/>
+        <button th:type="submit">Добавить</button>
+    </form>
+
+    <br/>
+
+    <form th:action="@{/rights/delete}" th:method="post" >
+        <div class="form-group field-select">
+            <label>Удалить схему</label>
+
+            <select class="form-control" name="selectedRightsIdToDelete" style="width: 180px">
+
+                <option th:if="${allRights.isEmpty()}"
+                        th:text="Empty">
+                </option>
+
+                <option th:each="rights : ${allRights}"
+                        th:text="${rights.getName()}"
+                        th:value="${rights.id}">
+                </option>
+            </select>
+
+            <button th:type="submit">Удалить</button>
+        </div>
+    </form>
+
+    <br/>
+
+    <form th:action="@{/rights/actions/view}" th:method="get" >
+        <div class="form-group field-select">
+            <label>Выберите схему</label>
+
+                <select class="form-control" name="selectedRightsId" style="width: 180px">
+
+                    <option selected
+                            th:if="${currentRights != null}"
+                            th:text="${currentRights.getName()} + ' ✔'"
+                            th:value="${currentRights.id}">
+                    </option>
+
+                    <option th:if="${allRights.isEmpty()}"
+                            th:text="Empty">
+                    </option>
+
+                    <option th:each="rights : ${allRights}"
+                            th:text="${rights.getName()}"
+                            th:value="${rights.id}">
+                    </option>
+                </select>
+
+            <button th:type="submit">Смотреть</button>
+        </div>
+    </form>
+
+    <br/>
+
+    <div th:if="${currentRights == null}">
+        <h3 >Доступные операции </h3>
+
+        <table cellpadding="2" cellspacing="2" border="1" class="sortable">
+            <tr><th>Номер</th><th>Действие</th><th>Описание</th></tr>
+            <tr th:if="${actions == null || actions.isEmpty()}"><td>-</td><td>Empty</td><td>Empty</td></tr>
+            <tr th:each="action : ${actions}">
+                <td th:text="${action.getId()}"></td><td th:text="${action.getName()}"></td><td th:text="${action.getDescription()}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${currentRights != null}">
+        <h3>Операции схемы "<span th:text="${currentRights.getName()}"></span>"</h3>
+
+        <form th:action="@{/rights/actions/status/edit}" method="post" th:object="${currentRights}">
+            <table cellpadding="2" cellspacing="2" border="1" id="table" th:object="${currentRights}">
+                <tr><th>Номер</th><th>Действие</th><th>Описание</th><th>Статус</th></tr>
+                <tr th:if="${currentRights.getActions().isEmpty()}"><td>-</td><td>Empty</td><td>Empty</td><td>Empty</td></tr>
+                <tr th:each="action : ${currentRights.actions}">
+                    <td th:text="${action.getId()}"></td><td th:text="${action.getName()}"></td><td th:text="${action.getDescription()}"></td>
+                    <td>
+                        <input  type="checkbox" th:if="${action.getStatus() == true}" th:checked="true" th:field="*{actions}" th:value="${action.id}">
+                        <input  type="checkbox" th:if="${action.getStatus() == false}" th:checked="false" th:field="*{actions}" th:value="${action.id}">
+                    </td>
+                </tr>
+            </table>
+
+            <br/>
+
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+
+
+
+</div>
+
+
+</body>
+
+</html>

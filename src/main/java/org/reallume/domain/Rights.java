@@ -2,7 +2,6 @@ package org.reallume.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,20 +16,20 @@ public class Rights {
     @NotNull
     private String name;
 
+  //@ManyToMany(mappedBy = "rights", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ManyToMany
     @JoinTable(
             name = "rights_actions",
             joinColumns = {@JoinColumn(name = "rights_id") },
             inverseJoinColumns = {@JoinColumn(name = "actions_id") }
     )
-
     private List<Action> actions;
+
 
     public Rights() { }
 
     public Rights(String name, List<Action> actions) {
         this.name = name;
-        this.actions = new ArrayList<>();
         this.setActions(actions);
     }
 
@@ -55,13 +54,13 @@ public class Rights {
     }
 
     public void setActions(List<Action> actions) {
-        this.actions = new ArrayList<>();
-        this.actions.addAll(actions);
+        this.actions = actions;
     }
 
     public void addAction(Action action) {
         this.actions.add(action);
     }
+
 
 
 }

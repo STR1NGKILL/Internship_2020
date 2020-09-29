@@ -51,6 +51,7 @@ dependencies {
 
 }
 
+
 def changeLog = "$projectDir/src/main/resources/db/changelog/changelog-master.xml"
 
 liquibase {
@@ -64,7 +65,18 @@ liquibase {
     }
 }
 
-
 wrapper {
     gradleVersion = '6.5.1'
 }
+
+//My tasks
+
+def xmlPath = "$projectDir/src/main/resources/default_actions.xml"
+
+//task ReadXmlAndUploadToDb(type: mytasks.gradle.XmlReaderAndDbUploaderTask, constructorArgs: [xmlPath])
+
+
+
+
+
+
