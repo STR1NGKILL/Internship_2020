@@ -10,7 +10,7 @@ public interface RightsRepository extends CrudRepository<Rights, Long> {
 
     Rights findByName(String name);
 
-    Optional<Rights> findById(Long rights_id);
+    Optional<Rights> findRightsById(Long rights_id);
 
     List<Rights> findAll();
 

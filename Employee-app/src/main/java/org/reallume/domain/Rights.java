@@ -1,13 +1,16 @@
 package org.reallume.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name = "rights")
+@Getter @Setter
 public class Rights {
 
     @Id
@@ -17,51 +20,19 @@ public class Rights {
     @NotNull
     private String name;
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(
             name = "rights_actions",
             joinColumns = {@JoinColumn(name = "rights_id") },
-            inverseJoinColumns = {@JoinColumn(name = "actions_id") }
-    )
-
-    private List<Action> actions;
+            inverseJoinColumns = {@JoinColumn(name = "actions_id"), @JoinColumn(name = "status") }
+    )*/
+    @OneToMany(mappedBy = "rights", fetch = FetchType.EAGER)
+    private List<ActionOfRights> actionOfRights;
 
     public Rights() { }
 
-    public Rights(String name, List<Action> actions) {
-        this.name = name;
-        this.actions = new ArrayList<>();
-        this.setActions(actions);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Rights(String name) {
         this.name = name;
     }
-
-    public List<Action> getActions() {
-        return actions;
-    }
-
-    public void setActions(List<Action> actions) {
-        this.actions = new ArrayList<>();
-        this.actions.addAll(actions);
-    }
-
-    public void addAction(Action action) {
-        this.actions.add(action);
-    }
-
 
 }

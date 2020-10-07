@@ -3,12 +3,9 @@
 /local.properties
 
 # Directories
-.gradle
+/.gradle/
 /lib/
 /build/
-/Employee-app/build
-/buildSrc/build
-/buildSrc/.gradle
 
 # Gradle:
 .idea/gradle.xml

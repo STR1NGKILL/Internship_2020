@@ -4,8 +4,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "accounts")
+@Getter @Setter
 public class Account {
 
     @Id
@@ -51,74 +55,5 @@ public class Account {
         this.closeDate = accountCloseDate;
         this.status = accountStatus;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public long getCurrencyQuantity() {
-        return currencyQuantity;
-    }
-
-    public void setCurrencyQuantity(long currencyQuantity) {
-        this.currencyQuantity = currencyQuantity;
-    }
-
-    public Calendar getOpenDate() {
-        return openDate;
-    }
-
-    public void setOpenDate(Calendar openDate) {
-        this.openDate = openDate;
-    }
-
-    public Calendar getCloseDate() {
-        return closeDate;
-    }
-
-    public void setCloseDate(Calendar closeDate) {
-        this.closeDate = closeDate;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
 
 }

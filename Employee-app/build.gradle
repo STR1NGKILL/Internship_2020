@@ -41,7 +41,10 @@ dependencies {
     //hibernate
     compile "org.hibernate:hibernate:3.5.4-Final"
     compile "org.hibernate:hibernate-core:5.2.1.Final"
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
-
-
-

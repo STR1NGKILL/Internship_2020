@@ -1,3 +1,5 @@
+
+
 buildscript {
     repositories {
         mavenCentral()
@@ -19,6 +21,7 @@ apply plugin: 'liquibase'
 group 'org.reallume'
 version '1.0-SNAPSHOT'
 
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -38,7 +41,6 @@ dependencies {
     //compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.3.1.RELEASE'
 
     //postgresql
-    runtime('org.postgresql:postgresql')
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
     runtime('org.postgresql:postgresql')
 
@@ -48,6 +50,12 @@ dependencies {
     //hibernate
     compile "org.hibernate:hibernate:3.5.4-Final"
     compile "org.hibernate:hibernate-core:5.2.1.Final"
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
 }
 
@@ -74,6 +82,8 @@ wrapper {
 def xmlPath = "$projectDir/src/main/resources/default_actions.xml"
 
 //task ReadXmlAndUploadToDb(type: mytasks.gradle.XmlReaderAndDbUploaderTask, constructorArgs: [xmlPath])
+
+
 
 
 

@@ -1,6 +1,5 @@
 package org.reallume.repository;
 
-import org.reallume.domain.Action;
 import org.reallume.domain.Employee;
 import org.springframework.data.repository.CrudRepository;
 

@@ -3,8 +3,12 @@ package org.reallume.domain;
 import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "currencies")
+@Getter @Setter
 public class Currency {
 
     @Id
@@ -20,15 +24,4 @@ public class Currency {
         this.name = name;
     }
 
-    public Byte getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
