@@ -29,20 +29,22 @@ public class Employee {
     @NotNull
     private String salt;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="rights_id")
     private Rights rights;
 
 
     public Employee() { }
 
-    public Employee(String firstName, String secondName, String patronymic, String login, String password, String salt) {
+    public Employee(String firstName, String secondName, String patronymic, String login, String password, String salt, Rights rights) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.patronymic = patronymic;
         this.login = login;
         this.password = password;
         this.salt = salt;
+        this.rights = rights;
     }
 
 }

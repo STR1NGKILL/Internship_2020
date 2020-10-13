@@ -16,6 +16,8 @@ public interface ActionOfRightsRepository extends CrudRepository<ActionOfRights,
 
     void deleteByRights_Id(Long rights_id);
 
+    void deleteByAction_Id(Long action_id);
+
 
 
 

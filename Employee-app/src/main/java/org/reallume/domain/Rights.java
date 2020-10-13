@@ -20,12 +20,9 @@ public class Rights {
     @NotNull
     private String name;
 
-    /*@ManyToMany
-    @JoinTable(
-            name = "rights_actions",
-            joinColumns = {@JoinColumn(name = "rights_id") },
-            inverseJoinColumns = {@JoinColumn(name = "actions_id"), @JoinColumn(name = "status") }
-    )*/
+    @OneToMany(mappedBy = "rights", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Employee> employees;
+
     @OneToMany(mappedBy = "rights", fetch = FetchType.EAGER)
     private List<ActionOfRights> actionOfRights;
 

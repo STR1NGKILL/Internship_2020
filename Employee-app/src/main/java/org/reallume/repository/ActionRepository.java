@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface ActionRepository extends CrudRepository<Action, Long> {
 
-    Action findByName(String name);
-
-    Optional<Action> findActionById(Long rights_id);
+    Optional<Action> findById(Long action_id);
 
     List<Action> findAll();
 

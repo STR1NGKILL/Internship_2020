@@ -22,12 +22,6 @@ public class Action {
     @NotNull
     private String description;
 
-    /*@ManyToMany
-    @JoinTable(
-            name = "rights_actions",
-            joinColumns = {@JoinColumn(name = "actions_id"), @JoinColumn(name = "status") },
-            inverseJoinColumns = {@JoinColumn(name = "rights_id") }
-    )*/
     @OneToMany(mappedBy = "action", fetch = FetchType.EAGER)
     private List<ActionOfRights> actionOfRights;
 

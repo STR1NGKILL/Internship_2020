@@ -1,25 +1,29 @@
 org/reallume/repository/RightsRepository.java
  org.reallume.repository.RightsRepository
+org/reallume/repository/EmployeeRepository.java
+ org.reallume.repository.EmployeeRepository
+org/reallume/controller/ActionController.java
+ org.reallume.controller.ActionController
+ org.reallume.controller.ActionController$LitAction
+org/reallume/controller/EmployeeController.java
+ org.reallume.controller.EmployeeController
+ org.reallume.controller.EmployeeController$CurrentEmployee
+org/reallume/config/MvcConfig.java
+ org.reallume.config.MvcConfig
+org/reallume/controller/RightsController.java
+ org.reallume.controller.RightsController
+ org.reallume.controller.RightsController$CurrentRights
 org/reallume/domain/Employee.java
  org.reallume.domain.Employee
 org/reallume/domain/Rights.java
  org.reallume.domain.Rights
-org/reallume/repository/EmployeeRepository.java
- org.reallume.repository.EmployeeRepository
-org/reallume/EmployeeApplication.java
- org.reallume.EmployeeApplication
-org/reallume/domain/ActionOfRights.java
- org.reallume.domain.ActionOfRights
-org/reallume/domain/Action.java
- org.reallume.domain.Action
 org/reallume/repository/ActionRepository.java
  org.reallume.repository.ActionRepository
+org/reallume/domain/Action.java
+ org.reallume.domain.Action
 org/reallume/repository/ActionOfRightsRepository.java
  org.reallume.repository.ActionOfRightsRepository
-org/reallume/controller/EmployeePageController.java
- org.reallume.controller.EmployeePageController
-org/reallume/config/MvcConfig.java
- org.reallume.config.MvcConfig
-org/reallume/controller/RightsPageController.java
- org.reallume.controller.RightsPageController
- org.reallume.controller.RightsPageController$CurrentRights
+org/reallume/domain/ActionOfRights.java
+ org.reallume.domain.ActionOfRights
+org/reallume/EmployeeApplication.java
+ org.reallume.EmployeeApplication

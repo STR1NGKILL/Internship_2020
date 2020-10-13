@@ -11,10 +11,7 @@ import org.reallume.repository.RightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ import java.util.List;
 
 
 @Controller
-public class RightsPageController {
+public class RightsController {
 
     @Autowired
     private RightsRepository rightsRepository;
@@ -48,13 +45,26 @@ public class RightsPageController {
 
     }
 
+    //rights main page
     @GetMapping(value = "/rights")
     public String rightsPage(Model model) {
 
         model.addAttribute("allRights", rightsRepository.findAll());
         model.addAttribute("commonActions", actionRepository.findAll());
 
-        return "rights-page";
+        return "rights/rights-page";
+    }
+
+    //rights editing page
+    @GetMapping(value = "/rights/{rights_id}/edit")
+    public String editRightsPage(@PathVariable Long rights_id, Model model) {
+
+        Rights currentRights = rightsRepository.findById(rights_id).get();
+
+        model.addAttribute("currentRights", currentRights);
+        model.addAttribute("commonActions", actionRepository.findAll());
+
+        return "rights/edit-page";
     }
 
     @PostMapping(value = "/rights/create")
@@ -72,38 +82,30 @@ public class RightsPageController {
     }
 
     @Transactional
-    @PostMapping(value = "/rights/delete")
-    public String deleteActionsStatus(@RequestParam Long selectedRightsIdToDelete) {
+    @GetMapping(value = "/rights/{rights_id}/delete")
+    public String deleteRights(@PathVariable Long rights_id) {
 
-        actionOfRightsRepository.deleteByRights_Id(selectedRightsIdToDelete);
-        rightsRepository.deleteById(selectedRightsIdToDelete);
+        actionOfRightsRepository.deleteByRights_Id(rights_id);
+        rightsRepository.deleteById(rights_id);
 
         return "redirect:/rights";
     }
 
-    @GetMapping(value = "/rights/actions/view")
-    public String viewActions(@RequestParam Long selectedRightsId, Model model) {
-
-
-        CurrentRights currentRights = new CurrentRights(new ArrayList<>(actionOfRightsRepository.findActionOfRightsByRights_Id(selectedRightsId)));
-
-        model.addAttribute("commonActions", actionRepository.findAll());
-        model.addAttribute("currentRights", currentRights);
-        model.addAttribute("allRights", rightsRepository.findAll());
-
-        return "rights-page";
-    }
-
-    @PostMapping(value = "/rights/actions/status/edit")
-    public String editActionsStatus(@ModelAttribute("currentRights") CurrentRights currentRights) {
+    @PostMapping(value = "/rights/{rights_id}/edit")
+    public String editRights(@PathVariable Long rights_id,
+                                    @ModelAttribute("currentRights") CurrentRights currentRights) {
 
         for (ActionOfRights element:currentRights.getActionOfRights()) {
             ActionOfRights actionOfRights = actionOfRightsRepository.findById(element.getId()).get();
             actionOfRights.setStatus(element.getStatus());
             actionOfRightsRepository.save(actionOfRights);
         }
+        Rights rightsWithNewName = rightsRepository.findById(rights_id).get();
+        rightsWithNewName.setName(currentRights.name);
 
-        return "redirect:/rights";
+        rightsRepository.save(rightsWithNewName);
+
+        return "redirect:/rights/" + rights_id.toString() + "/edit";
     }
 
 }
