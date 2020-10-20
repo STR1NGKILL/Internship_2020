@@ -95,11 +95,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="alert alert-danger" >
+                    <p class="alert alert-danger" th:if="${employeeOfCurrentRights.isEmpty()}" >
                         Вы действительно хотите удалить схему прав "<span th:text="${currentRights.getName()}"></span>" ?
                     </p>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
-                        <strong>Обратите внимание!</strong> Если данная схема прав привязана к существующему сотруднику, то её удаление невозможно.
+                        <strong>Обратите внимание!</strong>
+                        <span th:if="${!employeeOfCurrentRights.isEmpty()}">Данная схема прав привязана к сотруднику(ам). Её удаление невозможно.</span>
+                        <span th:if="${employeeOfCurrentRights.isEmpty()}">Данная схема прав не привязана к сотруднику(ам). Её удаление возможно.</span>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -107,7 +109,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a href="" class="btn btn-danger" id="delRef">Удалить</a>
+                    <a th:if="${employeeOfCurrentRights.isEmpty()}" href="" class="btn btn-danger" id="delRef">Удалить</a>
                 </div>
             </div>
         </div>

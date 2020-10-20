@@ -52,6 +52,7 @@
                 <label for="password">Пароль</label>
                 <input class="form-control rounded border input-group-lg" required id="password" type="text" th:field="*{password}" placeholder="Введите пароль" style="width: 250px"/>
                 <br/>
+                <input required  type="hidden" th:field="*{salt}"/>
                 <label for="rights">Схема прав</label>
                 <select class="form-control" id="rights" th:name="selectedRights" style="width: 250px" >
                     <option th:if="${allRights.isEmpty()}"

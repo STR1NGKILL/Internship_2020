@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+
+
+    <!--Basic-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col-auto" style="width: 23rem">
+
+                <div class="list-group border shadow-sm" style="background: white; margin-top: 3rem">
+                    <a class="list-group-item list-group-item-action disabled text-center border-top-0 border-left-0 border-right-0" style="background: #00b300; color: white">
+                        <i class="fas fa-list-ul"></i>
+                    </a>
+
+                    <div th:each="category : ${categories}">
+
+                    </div>
+                </div>
+        </div>
+
+        <div class="col-auto" style="width: 70rem" >
+        </div>
+
+        <div class="col-auto" style="width: auto">
+
+            <div class="list-group border shadow-sm" style="background: white; margin-top: 3rem">
+                <a class="nav-link dropdown-toggle" id="dropdown_employee" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="background: #00b300; color: white"
+                   th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName} + ' ' + ${loggedEmployee.patronymic}">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_employee">
+                    <a class="dropdown-item" href="#"><i class="far fa-address-card"></i>
+                        Профиль
+                    </a>
+                    <a class="dropdown-item" th:href="@{/login}">
+                        <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
+                            Завершить сеанс</font>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col"></div>
+
+    </div>
+</div>
+
+
+<!--Basic-->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

@@ -7,11 +7,13 @@ import org.reallume.domain.ActionOfRights;
 import org.reallume.domain.Rights;
 import org.reallume.repository.ActionOfRightsRepository;
 import org.reallume.repository.ActionRepository;
+import org.reallume.repository.EmployeeRepository;
 import org.reallume.repository.RightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class RightsController {
 
     @Autowired
     private RightsRepository rightsRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private ActionRepository actionRepository;
@@ -63,6 +68,7 @@ public class RightsController {
 
         model.addAttribute("currentRights", currentRights);
         model.addAttribute("commonActions", actionRepository.findAll());
+        model.addAttribute("employeeOfCurrentRights", employeeRepository.findByRights_Id(rights_id));
 
         return "rights/edit-page";
     }
@@ -85,8 +91,10 @@ public class RightsController {
     @GetMapping(value = "/rights/{rights_id}/delete")
     public String deleteRights(@PathVariable Long rights_id) {
 
-        actionOfRightsRepository.deleteByRights_Id(rights_id);
-        rightsRepository.deleteById(rights_id);
+        if(employeeRepository.findByRights_Id(rights_id).isEmpty()){
+            actionOfRightsRepository.deleteByRights_Id(rights_id);
+            rightsRepository.deleteById(rights_id);
+        }
 
         return "redirect:/rights";
     }

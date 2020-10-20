@@ -2,10 +2,8 @@ package org.reallume.controller;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.reallume.domain.ActionOfRights;
 import org.reallume.domain.Employee;
 import org.reallume.domain.Rights;
-import org.reallume.repository.ActionOfRightsRepository;
 import org.reallume.repository.EmployeeRepository;
 import org.reallume.repository.RightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.*;
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -40,16 +34,19 @@ public class EmployeeController {
 
         private String password;
 
+        private String salt;
+
         private Rights rights;
 
         public CurrentEmployee() { }
 
-        public CurrentEmployee(String firstName, String secondName, String patronymic, String login, String password, Rights rights) {
+        public CurrentEmployee(String firstName, String secondName, String patronymic, String login, String password, String salt, Rights rights) {
             this.firstName = firstName;
             this.secondName = secondName;
             this.patronymic = patronymic;
             this.login = login;
             this.password = password;
+            this.salt = salt;
             this.rights = rights;
         }
 
@@ -78,7 +75,8 @@ public class EmployeeController {
     @PostMapping(value = "/employees/create")
     public String createEmployee(@ModelAttribute Employee newEmployee, @RequestParam Long selectedRights) {
 
-        newEmployee.setSalt("newSalt123");
+        newEmployee.setSalt(SecurityController.generateSalt());
+        newEmployee.setPassword(SecurityController.getSaltPassword(newEmployee.getPassword(), newEmployee.getSalt()));
 
         newEmployee.setRights(rightsRepository.findById(selectedRights).get());
 
@@ -108,7 +106,7 @@ public class EmployeeController {
         employeeToEdit.setSecondName(currentEmployee.getSecondName());
         employeeToEdit.setPatronymic(currentEmployee.getPatronymic());
         employeeToEdit.setLogin(currentEmployee.getLogin());
-        employeeToEdit.setPassword(currentEmployee.getPassword());
+        employeeToEdit.setPassword(SecurityController.getSaltPassword(currentEmployee.getPassword(),currentEmployee.getSalt()));
         employeeToEdit.setRights(rightsRepository.findById(selectedRights).get());
 
         employeeRepository.save(employeeToEdit);

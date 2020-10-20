@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class ActionController {
 
-    @Autowired
+   /* @Autowired
     ActionRepository actionRepository;
 
     @Autowired
@@ -82,6 +82,6 @@ public class ActionController {
         Action action = actionRepository.findById(action_id).get();
 
         return new LitAction(action.getId(), action.getName(), action.getDescription());
-    }
+    }*/
 
 }
