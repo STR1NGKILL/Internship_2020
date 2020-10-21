@@ -1,2 +1,0 @@
-mytasks/gradle/XmlReaderAndDbUploaderTask.java
- mytasks.gradle.XmlReaderAndDbUploaderTask
