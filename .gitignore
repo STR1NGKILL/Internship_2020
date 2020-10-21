@@ -7,6 +7,14 @@
 /lib/
 /build/
 
+# User-specific stuff:
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Sensitive or high-churn files:
+.idea/uiDesigner.xml
+
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
@@ -16,4 +24,13 @@
 
 # Cache of project
 .gradletasknamecache
+
+# Inside modules
+buildSrc/.gradle
+buildSrc/build
+
+Employee-app/build
+
+
+
 

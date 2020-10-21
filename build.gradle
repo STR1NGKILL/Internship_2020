@@ -1,14 +1,12 @@
-
-
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE')
         classpath('org.postgresql:postgresql:42.2.2')
-        classpath 'org.liquibase:liquibase-core:3.4.1'
-        classpath "org.liquibase:liquibase-gradle-plugin:1.1.1"
+        classpath('org.liquibase:liquibase-core:3.4.1')
+        classpath('org.liquibase:liquibase-gradle-plugin:1.1.1')
     }
 }
 
@@ -56,7 +54,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
-
 }
 
 
@@ -77,9 +74,12 @@ wrapper {
     gradleVersion = '6.5.1'
 }
 
+
+
 //My tasks
 
 def xmlPath = "$projectDir/src/main/resources/default_actions.xml"
+
 
 //task ReadXmlAndUploadToDb(type: mytasks.gradle.XmlReaderAndDbUploaderTask, constructorArgs: [xmlPath])
 

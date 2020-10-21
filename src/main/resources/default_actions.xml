@@ -3,23 +3,17 @@
 <DefaultActions>
     <Action>
         <Id>0</Id>
-        <Name>Создание и удаление схем прав</Name>
-        <Description>Создание и удаление схем прав сотрудников</Description>
+        <Name>create_edit_delete_rights</Name>
+        <Description>Создание, редактирование и удаление схем прав сотрудников</Description>
     </Action>
     <Action>
         <Id>1</Id>
-        <Name>Создание и удаление операций</Name>
-        <Description>Создание и удаление операций, связанных со схемами прав</Description>
+        <Name>create_edit_delete_employee</Name>
+        <Description>Создание, редактирование и удаление сотрудников</Description>
     </Action>
     <Action>
         <Id>2</Id>
-        <Name>Применение схем прав</Name>
-        <Description>Применение схем прав сотруднику</Description>
-    </Action>
-    <Action>
-        <Id>3</Id>
-        <Name>Блокировка сотрудника</Name>
+        <Name>block_an_employee</Name>
         <Description>Блокировка профиля сотрудника</Description>
     </Action>
-
 </DefaultActions>
