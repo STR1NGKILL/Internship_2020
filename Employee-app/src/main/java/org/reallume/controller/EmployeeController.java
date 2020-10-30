@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class EmployeeController {
@@ -73,7 +74,7 @@ public class EmployeeController {
 
 
     @PostMapping(value = "/employees/create")
-    public String createEmployee(@ModelAttribute Employee newEmployee, @RequestParam Long selectedRights) {
+    public String createEmployee(@ModelAttribute Employee newEmployee, @RequestParam Long selectedRights) throws NoSuchAlgorithmException {
 
         newEmployee.setSalt(SecurityController.generateSalt());
         newEmployee.setPassword(SecurityController.getSaltPassword(newEmployee.getPassword(), newEmployee.getSalt()));
@@ -98,15 +99,14 @@ public class EmployeeController {
     @PostMapping(value = "/employees/{employee_id}/edit")
     public String editEmployee(@PathVariable Long employee_id,
                                @ModelAttribute("currentEmployee") CurrentEmployee currentEmployee,
-                               @RequestParam Long selectedRights) {
-
+                               @RequestParam Long selectedRights) throws NoSuchAlgorithmException {
 
         Employee employeeToEdit = employeeRepository.findById(employee_id).get();
         employeeToEdit.setFirstName(currentEmployee.getFirstName());
         employeeToEdit.setSecondName(currentEmployee.getSecondName());
         employeeToEdit.setPatronymic(currentEmployee.getPatronymic());
         employeeToEdit.setLogin(currentEmployee.getLogin());
-        employeeToEdit.setPassword(SecurityController.getSaltPassword(currentEmployee.getPassword(),currentEmployee.getSalt()));
+        employeeToEdit.setPassword(SecurityController.getSaltPassword(currentEmployee.getPassword(), currentEmployee.getSalt()));
         employeeToEdit.setRights(rightsRepository.findById(selectedRights).get());
 
         employeeRepository.save(employeeToEdit);

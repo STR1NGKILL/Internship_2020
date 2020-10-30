@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Главная</title>
@@ -28,8 +28,9 @@
                         <i class="fas fa-list-ul"></i>
                     </a>
 
-                    <a th:text="Права" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
-                    <a th:text="Сотрудники" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                    <a th:href="@{/rights}" th:text="Права" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                    <a th:href="@{/employees}" th:text="Сотрудники" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+
                 </div>
         </div>
 
@@ -47,7 +48,7 @@
                     <a class="dropdown-item" href="#"><i class="far fa-address-card"></i>
                         Профиль
                     </a>
-                    <a class="dropdown-item" th:href="@{/login}">
+                    <a class="dropdown-item" th:href="@{/logout}">
                         <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
                             Завершить сеанс</font>
                     </a>

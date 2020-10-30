@@ -10,13 +10,12 @@ public interface ActionOfRightsRepository extends CrudRepository<ActionOfRights,
 
     Optional<ActionOfRights> findById(Long actionOfRights_id);
 
-    List<ActionOfRights> findActionOfRightsByRights_Id(Long rights_id);
+    List<ActionOfRights> findByRights_id(Long rights_id);
 
     List<ActionOfRights> findAll();
 
     void deleteByRights_Id(Long rights_id);
 
-    void deleteByAction_Id(Long action_id);
 
 
 

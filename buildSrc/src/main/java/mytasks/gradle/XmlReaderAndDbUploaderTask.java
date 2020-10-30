@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class XmlReaderAndDbUploaderTask extends DefaultTask {
 
-    private ArrayList<String> readXml(String filepath) throws ParserConfigurationException, IOException, SAXException {
+    private static ArrayList<String> readXml(String filepath) throws ParserConfigurationException, IOException, SAXException {
 
         ArrayList<String> queries = new ArrayList<String>();
 
@@ -46,7 +46,7 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
         return queries;
     }
 
-    private void sendQueryToDb(ArrayList<String> queries) throws SQLException {
+    private static void sendQueryToDb(ArrayList<String> queries) throws SQLException {
 
         Connection connection = null;
 
@@ -67,8 +67,14 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
     }
 
     @TaskAction
-    public void run(String path) throws IOException, SAXException, ParserConfigurationException, SQLException {
-        ArrayList<String> queries = readXml(path);
+    public void run() throws IOException, SAXException, ParserConfigurationException, SQLException {
+        ArrayList<String> queries = readXml("/src/main/resources/default_actions.xml");
+        sendQueryToDb(queries);
+        System.out.println("Queries complete!");
+    }
+
+    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException, SQLException {
+        ArrayList<String> queries = readXml("/src/main/resources/default_actions.xml");
         sendQueryToDb(queries);
         System.out.println("Queries complete!");
     }
