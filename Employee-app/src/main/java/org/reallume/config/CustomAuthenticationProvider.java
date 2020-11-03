@@ -30,6 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
+        String defaultAuthority = "main-page-access";
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
         List<GrantedAuthority> authorities;
@@ -49,7 +50,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                     authoritiesString += actionOfRights.getAction().getName() + ",";
             }
 
-            authoritiesString = authoritiesString.substring(0, authoritiesString.length() - 1);
+            authoritiesString = authoritiesString + defaultAuthority;
 
             authorities = Arrays.stream(authoritiesString.split(","))
                     .map(SimpleGrantedAuthority::new)

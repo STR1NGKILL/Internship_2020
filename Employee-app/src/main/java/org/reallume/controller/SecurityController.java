@@ -16,6 +16,11 @@ public class SecurityController extends HttpServlet {
         return "common/login-page";
     }
 
+    @GetMapping(value = "/access-error")
+    public String accessErrorPage(Model model) {
+        return "common/access-denied-page";
+    }
+
     public static String generateSalt(){
         String salt = UUID.randomUUID().toString();
         salt = salt.substring(0, salt.length() - 20);

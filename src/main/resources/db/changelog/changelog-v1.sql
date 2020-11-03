@@ -21,3 +21,5 @@ values (
     'Середа'
 );
 --rollback delete from employees where login = 'str1ng';
+
+
