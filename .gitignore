@@ -1,23 +1,11 @@
 # User-specific stuff:
-.idea/workspace.xml
 /local.properties
 
 # Directories
 /.gradle/
 /lib/
 /build/
-
-# User-specific stuff:
-.idea/workspace.xml
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
-
-# Sensitive or high-churn files:
-.idea/uiDesigner.xml
-
-# Gradle:
-.idea/gradle.xml
-.idea/libraries
+.idea
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
