@@ -1,19 +1,6 @@
 package org.reallume.controller;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.reallume.domain.Action;
-import org.reallume.domain.ActionOfRights;
-import org.reallume.repository.ActionOfRightsRepository;
-import org.reallume.repository.ActionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class ActionController {

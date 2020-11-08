@@ -1,0 +1,10 @@
+org/reallume/domain/Employee.java
+ org.reallume.domain.Employee
+org/reallume/domain/Rights.java
+ org.reallume.domain.Rights
+org/reallume/EmployeeDbInitialization.java
+ org.reallume.EmployeeDbInitialization
+org/reallume/domain/Action.java
+ org.reallume.domain.Action
+org/reallume/domain/ActionOfRights.java
+ org.reallume.domain.ActionOfRights

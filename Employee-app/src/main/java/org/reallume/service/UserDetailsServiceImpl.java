@@ -1,6 +1,5 @@
 package org.reallume.service;
 
-import org.reallume.domain.ActionOfRights;
 import org.reallume.domain.Employee;
 import org.reallume.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
