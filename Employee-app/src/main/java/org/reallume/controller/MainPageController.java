@@ -1,6 +1,6 @@
 package org.reallume.controller;
 
-import org.reallume.repository.EmployeeRepository;
+import org.reallume.repository.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

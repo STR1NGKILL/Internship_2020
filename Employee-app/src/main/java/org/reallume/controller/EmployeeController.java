@@ -2,10 +2,10 @@ package org.reallume.controller;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.reallume.domain.Employee;
-import org.reallume.domain.Rights;
-import org.reallume.repository.EmployeeRepository;
-import org.reallume.repository.RightsRepository;
+import org.reallume.domain.employee.Employee;
+import org.reallume.domain.employee.Rights;
+import org.reallume.repository.employee.EmployeeRepository;
+import org.reallume.repository.employee.RightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

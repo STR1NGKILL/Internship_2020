@@ -1,7 +1,7 @@
 package org.reallume.service;
 
-import org.reallume.domain.Employee;
-import org.reallume.repository.EmployeeRepository;
+import org.reallume.domain.employee.Employee;
+import org.reallume.repository.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

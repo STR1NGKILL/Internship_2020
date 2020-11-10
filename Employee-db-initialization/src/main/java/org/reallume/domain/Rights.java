@@ -5,12 +5,14 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Entity
 @Table(name = "rights")
 @Getter @Setter
+@NoArgsConstructor
 public class Rights {
 
     @Id
@@ -25,8 +27,6 @@ public class Rights {
 
     @OneToMany(mappedBy = "rights", fetch = FetchType.EAGER)
     private List<ActionOfRights> actionOfRights;
-
-    public Rights() { }
 
     public Rights(String name) {
         this.name = name;

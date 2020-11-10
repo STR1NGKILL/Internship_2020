@@ -1,6 +1,7 @@
-package org.reallume.domain;
+package org.reallume.domain.employee;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "rights")
 @Getter @Setter
+@NoArgsConstructor
 public class Rights {
 
     @Id
@@ -25,8 +27,6 @@ public class Rights {
 
     @OneToMany(mappedBy = "rights", fetch = FetchType.EAGER)
     private List<ActionOfRights> actionOfRights;
-
-    public Rights() { }
 
     public Rights(String name) {
         this.name = name;

@@ -1,13 +1,12 @@
-package org.reallume.domain;
-
-import javax.validation.constraints.NotNull;
-import javax.persistence.*;
-import java.util.Calendar;
+package org.reallume.domain.main;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 
 
 @Entity
@@ -24,9 +23,11 @@ public class Card {
     private String number;
 
     @NotNull
+    @Column(name = "open_date")
     private Calendar openDate;
 
     @NotNull
+    @Column(name = "close_date")
     private Calendar closeDate;
 
     @NotNull

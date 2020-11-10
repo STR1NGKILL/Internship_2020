@@ -1,6 +1,6 @@
-package org.reallume.repository;
+package org.reallume.repository.employee;
 
-import org.reallume.domain.ActionOfRights;
+import org.reallume.domain.employee.ActionOfRights;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -15,9 +15,5 @@ public interface ActionOfRightsRepository extends CrudRepository<ActionOfRights,
     List<ActionOfRights> findAll();
 
     void deleteByRights_Id(Long rights_id);
-
-
-
-
 
 }

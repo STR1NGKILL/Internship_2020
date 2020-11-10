@@ -1,12 +1,11 @@
-package org.reallume.domain;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+package org.reallume.domain.main;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 
@@ -21,9 +20,15 @@ public class Customer {
     private Long id;
 
     @NotNull
-    private String  firstName,
-            secondName,
-            patronymic;
+    @Column(name = "first_name")
+    private String  firstName;
+
+    @NotNull
+    @Column(name = "second_name")
+    private String  secondName;
+
+    @NotNull
+    private String  patronymic;
 
     @NotNull
     @Lob

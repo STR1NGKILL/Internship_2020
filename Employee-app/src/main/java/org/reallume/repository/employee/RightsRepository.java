@@ -1,6 +1,6 @@
-package org.reallume.repository;
+package org.reallume.repository.employee;
 
-import org.reallume.domain.Rights;
+import org.reallume.domain.employee.Rights;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

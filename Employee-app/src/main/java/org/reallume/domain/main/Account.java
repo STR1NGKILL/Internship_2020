@@ -1,12 +1,12 @@
-package org.reallume.domain;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Calendar;
+package org.reallume.domain.main;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 
 
 @Entity
@@ -23,12 +23,15 @@ public class Account {
     private String number;
 
     @NotNull
+    @Column(name = "currency_quantity")
     private long currencyQuantity;
 
     @NotNull
+    @Column(name = "open_date")
     private Calendar openDate;
 
     @NotNull
+    @Column(name = "close_date")
     private Calendar closeDate;
 
     @NotNull

@@ -1,12 +1,12 @@
-package main.java.org.reallume;
+package org.reallume;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InitializationEmployeeDb {
+public class MainDbInitialization {
     public static void main(String[] args) {
-        SpringApplication.run(InitializationEmployeeDb.class, args);
+        SpringApplication.run(MainDbInitialization.class, args);
     }
 
 }

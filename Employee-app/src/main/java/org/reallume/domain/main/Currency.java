@@ -1,11 +1,11 @@
-package org.reallume.domain;
-
-import javax.validation.constraints.NotNull;
-import javax.persistence.*;
+package org.reallume.domain.main;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "currencies")

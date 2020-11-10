@@ -1,6 +1,7 @@
-package org.reallume.domain;
+package org.reallume.domain.employee;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "employees")
 @Getter @Setter
+@NoArgsConstructor
 public class Employee {
 
     @Id
@@ -16,9 +18,15 @@ public class Employee {
     private Long id;
 
     @NotNull
-    private String  firstName,
-            secondName,
-            patronymic;
+    @Column(name = "first_name")
+    private String  firstName;
+
+    @NotNull
+    @Column(name = "second_name")
+    private String  secondName;
+
+    @NotNull
+    private String  patronymic;
 
     @NotNull
     private String login;
@@ -33,8 +41,6 @@ public class Employee {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="rights_id")
     private Rights rights;
-
-    public Employee() { }
 
     public Employee(String firstName, String secondName, String patronymic, String login, String password, String salt, Rights rights) {
         this.firstName = firstName;

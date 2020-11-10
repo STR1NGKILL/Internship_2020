@@ -16,9 +16,6 @@
 # Inside modules
 buildSrc/.gradle
 buildSrc/build
-
 Employee-app/build
-
-
-
-
+Employee-db-initialization/build
+Main-db-initialization/build

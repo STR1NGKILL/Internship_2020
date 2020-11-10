@@ -1,7 +1,7 @@
 package org.reallume.service;
 
-import org.reallume.domain.ActionOfRights;
-import org.reallume.domain.Employee;
+import org.reallume.domain.employee.ActionOfRights;
+import org.reallume.domain.employee.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
