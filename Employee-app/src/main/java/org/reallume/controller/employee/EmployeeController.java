@@ -1,7 +1,8 @@
-package org.reallume.controller;
+package org.reallume.controller.employee;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.reallume.controller.SecurityController;
 import org.reallume.domain.employee.Employee;
 import org.reallume.domain.employee.Rights;
 import org.reallume.repository.employee.EmployeeRepository;
@@ -59,10 +60,10 @@ public class EmployeeController {
 
         model.addAttribute("employees", employeeRepository.findAll());
 
-        return "employee/employee-page";
+        return "employee/employees-page";
     }
 
-    //create an employee page
+    //create an employee - page
     @GetMapping(value = "/employees/create")
     public String createEmployeePage(Model model) {
 
@@ -86,7 +87,7 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
-    //edit an employee page
+    //edit an employee - page
     @GetMapping(value = "/employees/{employee_id}/edit")
     public String editEmployeePage(@PathVariable Long employee_id, Model model) {
 

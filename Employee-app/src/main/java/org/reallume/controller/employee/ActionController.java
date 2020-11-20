@@ -1,4 +1,4 @@
-package org.reallume.controller;
+package org.reallume.controller.employee;
 
 import org.springframework.stereotype.Controller;
 

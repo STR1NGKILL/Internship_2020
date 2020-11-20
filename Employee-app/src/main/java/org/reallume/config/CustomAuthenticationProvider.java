@@ -40,7 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (employeeRepository.findByLogin(name).isPresent()) {
 
             String salt = foundEmployee.get().getSalt();
-            String saltPassword = getSaltPassword(password, salt);
+            String saltPassword = foundEmployee.get().getPassword();
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

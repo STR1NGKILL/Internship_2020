@@ -1,4 +1,4 @@
-package org.reallume.controller;
+package org.reallume.controller.employee;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,11 +56,12 @@ public class RightsController {
 
         model.addAttribute("allRights", rightsRepository.findAll());
         model.addAttribute("commonActions", actionRepository.findAll());
+        System.out.println(rightsRepository.findById(0L).get().getActionOfRights());
 
         return "rights/rights-page";
     }
 
-    //rights editing page
+    //rights editing - page
     @GetMapping(value = "/rights/{rights_id}/edit")
     public String editRightsPage(@PathVariable Long rights_id, Model model) {
 
