@@ -16,4 +16,19 @@
         <Name>block_an_employee</Name>
         <Description>Блокировка профиля сотрудника</Description>
     </Action>
+    <Action>
+        <Id>3</Id>
+        <Name>create_edit_delete_сustomer</Name>
+        <Description>Создание, редактирование и удаление клиента</Description>
+    </Action>
+    <Action>
+        <Id>4</Id>
+        <Name>create_edit_delete_account</Name>
+        <Description>Создание, редактирование и удаление счёта</Description>
+    </Action>
+    <Action>
+        <Id>5</Id>
+        <Name>create_edit_delete_card</Name>
+        <Description>Создание, редактирование и удаление карт</Description>
+    </Action>
 </Actions>

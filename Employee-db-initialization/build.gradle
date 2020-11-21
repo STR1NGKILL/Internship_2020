@@ -1,4 +1,4 @@
-import gradle.tasks.XmlReaderAndDbUploaderTask;
+
 
 buildscript {
     repositories {
@@ -19,7 +19,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'liquibase'
 
 
-task execute(type:XmlReaderAndDbUploaderTask)
+
 
 
 group 'org.reallume'

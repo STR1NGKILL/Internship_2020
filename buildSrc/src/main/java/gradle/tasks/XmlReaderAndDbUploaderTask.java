@@ -41,11 +41,15 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
                 String name = element.getElementsByTagName("Name").item(0).getChildNodes().item(0).getNodeValue();
                 String description = element.getElementsByTagName("Description").item(0).getChildNodes().item(0).getNodeValue();
 
-                queries.add("INSERT INTO actions(id,name,description)" +
-                        " VALUES ('" + id + "','" + name + "','" + description + "');");
+                queries.add(
+                        "INSERT INTO actions(id,name,description) " +
+                        "VALUES ('" + id + "','" + name + "','" + description + "') ON CONFLICT DO NOTHING ;");
             }
 
         }
+
+
+
 
         return queries;
     }
@@ -55,8 +59,9 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
         Connection connection = null;
 
         try {
+            Class.forName ("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/EmployeeDb", "postgres", "4145");
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Connection fail!" + "\n\n");
             e.printStackTrace();
             return;
@@ -67,6 +72,7 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
         for (String query: queries) {
             statement.execute(query);
         }
+        System.out.println("Queries complete!");
 
     }
 
@@ -74,7 +80,6 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
     public void run() throws IOException, SAXException, ParserConfigurationException, SQLException {
         ArrayList<String> queries = parseXml(this.getClass().getResourceAsStream("/actions.xml"));
         sendQueryToDb(queries);
-        System.out.println("Queries complete!");
     }
 
 
