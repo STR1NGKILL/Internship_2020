@@ -1,6 +1,8 @@
 rootProject.name = 'Company'
 include 'Employee-app'
+include 'Customer-app'
 include 'Main-db-initialization'
 include 'Employee-db-initialization'
+
 
 
