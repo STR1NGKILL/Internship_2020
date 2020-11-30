@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     Employee findByFirstNameAndSecondNameAndPatronymic(String firstName, String secondName, String patronymic);
@@ -14,7 +15,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     Optional<Employee> findByLogin(String employee_login);
 
-    Optional<Employee> findByRights_Id(Long rights_id);
+    List<Employee> findByRights_Id(Long rights_id);
 
     List<Employee> findAll();
 

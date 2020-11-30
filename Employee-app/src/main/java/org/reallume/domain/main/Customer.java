@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -35,7 +36,7 @@ public class Customer {
     private byte[] document;
 
     @NotNull
-    private Calendar birthday;
+    private Date birthday;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Account> accounts;
@@ -43,7 +44,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cards;
 
-    public Customer(String firstName, String secondName, String patronymic, byte[] document, Calendar birthday) {
+    public Customer(String firstName, String secondName, String patronymic, byte[] document, Date birthday) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.patronymic = patronymic;

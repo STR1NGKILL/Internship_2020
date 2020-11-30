@@ -6,6 +6,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,15 +21,18 @@ import java.util.HashMap;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "employeeEntityManagerFactory",
-        transactionManagerRef = "employeeTransactionManager", basePackages = {"org.reallume.repository.employee" })
+        transactionManagerRef = "employeeTransactionManager",
+        basePackages = {"org.reallume.repository.employee"})
 public class EmployeeDbConfig {
 
+    @Primary
     @Bean(name = "employeeDataSource")
     @ConfigurationProperties(prefix = "spring.employee.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
 
+    @Primary
     @Bean(name = "employeeEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean employeeEntityManagerFactory(
             EntityManagerFactoryBuilder builder, @Qualifier("employeeDataSource") DataSource dataSource) {
@@ -44,12 +48,14 @@ public class EmployeeDbConfig {
                 .build();
     }
 
+    @Primary
     @Bean(name = "employeeTransactionManager")
     public PlatformTransactionManager employeeTransactionManager(
             @Qualifier("employeeEntityManagerFactory") EntityManagerFactory employeeEntityManagerFactory) {
         return new JpaTransactionManager(employeeEntityManagerFactory);
     }
 
+    @Primary
     @Bean
     public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
         return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(), new HashMap<>(), null);

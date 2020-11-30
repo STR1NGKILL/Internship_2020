@@ -50,7 +50,6 @@ public class RightsController {
 
     }
 
-    //rights main page
     @GetMapping(value = "/rights")
     public String rightsPage(Model model) {
 
@@ -59,19 +58,6 @@ public class RightsController {
         System.out.println(rightsRepository.findById(0L).get().getActionOfRights());
 
         return "rights/rights-page";
-    }
-
-    //rights editing - page
-    @GetMapping(value = "/rights/{rights_id}/edit")
-    public String editRightsPage(@PathVariable Long rights_id, Model model) {
-
-        Rights currentRights = rightsRepository.findById(rights_id).get();
-
-        model.addAttribute("currentRights", currentRights);
-        model.addAttribute("commonActions", actionRepository.findAll());
-        model.addAttribute("employeeOfCurrentRights", employeeRepository.findByRights_Id(rights_id));
-
-        return "rights/edit-page";
     }
 
     @PostMapping(value = "/rights/create")
@@ -88,7 +74,7 @@ public class RightsController {
         return "redirect:/rights";
     }
 
-    @Transactional
+
     @GetMapping(value = "/rights/{rights_id}/delete")
     public String deleteRights(@PathVariable Long rights_id) {
 
@@ -98,6 +84,18 @@ public class RightsController {
         }
 
         return "redirect:/rights";
+    }
+
+    @GetMapping(value = "/rights/{rights_id}/edit")
+    public String editRightsPage(@PathVariable Long rights_id, Model model) {
+
+        Rights currentRights = rightsRepository.findById(rights_id).get();
+
+        model.addAttribute("currentRights", currentRights);
+        model.addAttribute("commonActions", actionRepository.findAll());
+        model.addAttribute("employeeOfCurrentRights", employeeRepository.findByRights_Id(rights_id));
+
+        return "rights/edit-page";
     }
 
     @PostMapping(value = "/rights/{rights_id}/edit")

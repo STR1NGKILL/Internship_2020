@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Ограничение доступа</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+</head>
+<body>
+<br>
+<center>
+    <div class="card bg-light mb-3 badge-pill" style="width: 75rem;">
+        <div class="card-body">
+            <div class="container">
+                <h2 class="display-2" style="margin-bottom: 15px;">ВНИМАНИЕ</h2>
+                <span style="font-size: x-large">У Вас нет доступа к этой странице</span><br><br>
+            </div>
+
+            <img height="300px" src="https://s.tcdn.co/747/d48/747d480a-1032-348f-94ed-2e948215a11d/47.png">
+            <br>
+            <br>
+            <div style="width: 50rem;alignment: center">
+                <a class="btn btn-lg btn-success shadow-sm badge-pill" style="color: white; width: 200px" th:href="@{/main}">На главную</a>
+            </div>
+        </div>
+        <br/>
+    </div>
+    </div>
+</center>
+</body>
+</html>

@@ -21,21 +21,21 @@
         <div class="col"></div>
 
         <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
-            <a th:href="@{/employees}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+            <a th:href="@{/customers}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-auto" style="width: 70rem" >
 
             <div>
                 <br/>
-                <h5 class="display-4">Редактирование данных сотрудника</h5>
+                <h5 class="display-4">Редактирование данных клиента</h5>
                 <br/><br/>
             </div>
 
-            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования</h5></label>
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования клиента</h5></label>
             <br/><br/>
 
-            <form th:action="@{/employees/{employee_id}/edit/(employee_id=${currentEmployee.id})}" th:method="POST" th:object="${currentEmployee}" id="form">
+            <form th:action="@{/customers/{customer_id}/edit/(customer_id=${currentCustomer.id})}" th:method="POST" th:object="${currentCustomer}" id="form" enctype="multipart/form-data">
 
                 <label for="firstName">Имя</label>
                 <input class="form-control rounded border input-group-lg" required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
@@ -46,37 +46,23 @@
                 <label for="patronymic">Отчество</label>
                 <input class="form-control rounded border input-group-lg" required id="patronymic" type="text" th:field="*{patronymic}" placeholder="Введите отчество" style="width: 250px"/>
                 <br/>
-                <label for="login">Логин</label>
-                <input class="form-control rounded border input-group-lg" required id="login" type="text" th:field="*{login}" placeholder="Введите логин" style="width: 250px"/>
+                <label for="birthday">Дата рождения</label>
+                <input class="form-control rounded border input-group-lg" required id="birthday" type="date" name="birthdayStringValue" th:value="${birthdayStringValue}" placeholder="Введите дату рождения" style="width: 250px"/>
                 <br/>
-                <label for="password">Пароль</label>
-                <input class="form-control rounded border input-group-lg" required id="password" type="password" th:field="*{password}" placeholder="Введите пароль" style="width: 250px"/>
+                <label for="document">Документ подтверждающий личность (например, паспорт) формата .png</label>
                 <br/>
-                <input required  type="hidden" th:field="*{salt}"/>
-                <label for="rights">Схема прав</label>
-                <select class="form-control" id="rights" th:name="selectedRights" style="width: 250px" >
-                    <option th:if="${allRights.isEmpty()}"
-                            th:text="Пусто">
-                    </option>
-
-                    <option th:each="rights : ${allRights}"
-                            th:if="${rights.id == currentEmployee.rights.id}" selected
-                            th:text="${rights.getName()}"
-                            th:value="${rights.id}">
-                    </option>
-
-                    <option th:each="rights : ${allRights}"
-                            th:if="${rights.id != currentEmployee.rights.id}"
-                            th:text="${rights.getName()}"
-                            th:value="${rights.id}">
-                    </option>
-                </select>
-
+                <div class="custom-control-inline" id="document">
+                    <input th:if="${currentCustomer.getDocument() == null}" class="custom-file" required  type="file" name="file" placeholder="Выберите документ" style="width: 250px"/>
+                    <input th:if="${currentCustomer.getDocument() != null}" class="custom-file" type="file" name="file" placeholder="Выберите документ" style="width: 250px"/>
+                    <div style="padding-left: 1rem">
+                        <a th:href="@{/customers/{customer_id}/edit/file/download/(customer_id=${currentCustomer.id})}" type="button" class="btn btn-success btn-sm" style="width: 7rem; color: white;"><i class="fas fa-download"></i>&nbsp;&nbsp;Скачать</a>
+                    </div>
+                </div>
                 <br/>
-                <div class="currentEmployee_action" style="text-align: right;">
+                <div class="currentCustomer_action" style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
-                    <a th:href="@{/employees/{employee_id}/delete/(employee_id=${currentEmployee.id})}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить сотрудника</a>
+                    <a th:href="@{/customers/{customer_id}/delete/(customer_id=${currentCustomer.id})}" type="button" class="deleteCustomerBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить клиента</a>
                 </div>
             </form>
 
@@ -90,21 +76,21 @@
     </div>
 </div>
 
-<!-- Modal popup - delete current employee-->
-<div class="deleteEmployeeForm">
-    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal popup - delete the current customer-->
+<div class="deleteCustomerForm">
+    <div class="modal fade" id="deleteCustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div style="text-align: right;margin-right: 20px;"></div>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteEmployeeModalLabel">Удаление схемы прав</h5>
+                    <h5 class="modal-title" id="deleteCustomerModalLabel">Удаление клиента</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="alert alert-danger" >
-                        Вы действительно хотите удалить данного сотрудника?
+                        Вы действительно хотите удалить данного клиента?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -125,11 +111,11 @@
 <!--modal popup script to delete current employee-->
 <script>
     $(document).ready(function () {
-        $('.currentEmployee_action .deleteEmployeeBtn ').on('click', function (event) {
+        $('.currentCustomer_action .deleteCustomerBtn ').on('click', function (event) {
             event.preventDefault();
             var href = $(this).attr('href');
-            $('#deleteEmployeeModal #delRef').attr('href', href);
-            $('#deleteEmployeeModal').modal();
+            $('#deleteCustomerModal #delRef').attr('href', href);
+            $('#deleteCustomerModal').modal();
         })
     });
 </script>

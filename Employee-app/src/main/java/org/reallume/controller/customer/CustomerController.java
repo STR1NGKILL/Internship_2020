@@ -1,17 +1,23 @@
 package org.reallume.controller.customer;
 
-import org.reallume.domain.employee.Employee;
 import org.reallume.domain.main.Customer;
 import org.reallume.repository.main.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 @Controller
 public class CustomerController {
@@ -19,7 +25,6 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    //customer main page
     @GetMapping(value = "/customers")
     public String rightsPage(Model model) {
 
@@ -28,28 +33,34 @@ public class CustomerController {
         return "customer/customers-page";
     }
 
-    //create a customer - page
     @GetMapping(value = "/customers/create")
     public String createCustomerPage(Model model) {
 
+        String birthdayStringValue = "";
+
+        model.addAttribute("birthdayStringValue", birthdayStringValue);
         model.addAttribute("newCustomer", new Customer());
+
 
         return "customer/create-page";
     }
 
-
     @PostMapping(value = "/customers/create")
-    public String createCustomer(@ModelAttribute Customer newCustomer){
+    public String createCustomer(@ModelAttribute Customer newCustomer,
+                                 @RequestParam String birthdayStringValue,
+                                 @Valid @RequestParam("file") MultipartFile file) throws ParseException, IOException {
 
+        newCustomer.setDocument(file.getBytes());
+        newCustomer.setBirthday(converterStringToDate(birthdayStringValue));
         customerRepository.save(newCustomer);
 
         return "redirect:/customers";
     }
 
-    //edit a customer - page
     @GetMapping(value = "/customers/{customer_id}/edit")
     public String editCustomerPage(@PathVariable Long customer_id, Model model) {
 
+        model.addAttribute("birthdayStringValue", converterDateToString(customerRepository.findById(customer_id).get().getBirthday()));
         model.addAttribute("currentCustomer", customerRepository.findById(customer_id).get());
 
         return "customer/edit-page";
@@ -57,22 +68,52 @@ public class CustomerController {
 
     @PostMapping(value = "/customers/{customer_id}/edit")
     public String editCustomer(@PathVariable Long customer_id,
-                               @ModelAttribute("currentCustomer") Customer currentCustomer) {
+                               @ModelAttribute("currentCustomer") Customer currentCustomer,
+                               @RequestParam String birthdayStringValue,
+                               @Valid @RequestParam("file") MultipartFile file) throws ParseException, IOException {
 
         Customer customerToEdit = customerRepository.findById(customer_id).get();
 
-        customerRepository.save(customerToEdit);
+        if (!file.isEmpty()) currentCustomer.setDocument(file.getBytes());
+        else currentCustomer.setDocument(customerToEdit.getDocument());
+
+        currentCustomer.setBirthday(converterStringToDate(birthdayStringValue));
+        currentCustomer.setId(customer_id);
+
+        customerRepository.save(currentCustomer);
 
         return "redirect:/customers/" + customer_id.toString() + "/edit";
     }
 
-    @Transactional
     @GetMapping(value = "/customers/{customer_id}/delete")
     public String deleteCustomer(@PathVariable Long customer_id) {
 
         customerRepository.deleteById(customer_id);
 
         return "redirect:/customers";
+    }
+
+    @GetMapping(value = "/customers/{customer_id}/edit/file/download")
+    public HttpEntity<byte[]> downloadDocument(@PathVariable Long customer_id) {
+
+        byte[] file = customerRepository.findById(customer_id).get().getDocument();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        headers.setContentLength(file.length);
+
+        return new HttpEntity<byte[]>(file, headers);
+    }
+
+
+    public Date converterStringToDate(String StringValue) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.parse(StringValue);
+    }
+
+    public String converterDateToString(Date dateValue) {
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(dateValue);
     }
 
 }

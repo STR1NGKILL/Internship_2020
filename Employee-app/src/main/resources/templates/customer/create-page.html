@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Добавление сотрудника</title>
+    <title>Добавление клиента</title>
 
     <!--Basic-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -21,21 +21,21 @@
         <div class="col"></div>
 
         <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
-            <a th:href="@{/employees}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+            <a th:href="@{/customers}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-auto" style="width: 70rem" >
 
             <div>
                 <br/>
-                <h5 class="display-4">Добавление сотрудника</h5>
+                <h5 class="display-4">Добавление клиента</h5>
                 <br/><br/>
             </div>
 
-            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма создания сотрудника</h5></label>
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма создания клиента</h5></label>
             <br/><br/>
 
-            <form th:action="@{/employees/create}" th:method="POST" th:object="${newEmployee}" id="form">
+            <form th:action="@{/customers/create}" th:method="POST" th:object="${newCustomer}" id="form" enctype="multipart/form-data">
 
                 <label for="firstName">Имя</label>
                 <input class="form-control rounded border input-group-lg" required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
@@ -46,24 +46,12 @@
                 <label for="patronymic">Отчество</label>
                 <input class="form-control rounded border input-group-lg" required id="patronymic" type="text" th:field="*{patronymic}" placeholder="Введите отчество" style="width: 250px"/>
                 <br/>
-                <label for="login">Логин</label>
-                <input class="form-control rounded border input-group-lg" required id="login" type="text" th:field="*{login}" placeholder="Введите логин" style="width: 250px"/>
+                <label for="birthday">Дата рождения</label>
+                <input class="form-control rounded border input-group-lg" required id="birthday" type="date" name="birthdayStringValue" placeholder="Введите дату рождения" style="width: 250px"/>
                 <br/>
-                <label for="password">Пароль</label>
-                <input class="form-control rounded border input-group-lg" required id="password" type="text" th:field="*{password}" placeholder="Введите пароль" style="width: 250px"/>
+                <label for="document">Документ подтверждающий личность (например, паспорт)</label>
                 <br/>
-                <label for="rights">Схема прав</label>
-                <select class="form-control" id="rights" th:name="selectedRights" style="width: 250px" >
-                    <option th:if="${allRights.isEmpty()}"
-                            th:text="Empty">
-                    </option>
-
-                    <option th:each="rights : ${allRights}"
-                            th:text="${rights.getName()}"
-                            th:value="${rights.id}">
-                    </option>
-                </select>
-
+                <input class="custom-file" required id="document" type="file" name="file" placeholder="Выберите документ" style="width: 250px"/>
                 <br/>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;

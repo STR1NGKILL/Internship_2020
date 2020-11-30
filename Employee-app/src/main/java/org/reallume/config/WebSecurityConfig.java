@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/rights/**").hasAnyAuthority("create_edit_delete_rights")
                 .antMatchers("/employees/**").hasAnyAuthority("create_edit_delete_employee")
+                .antMatchers("/customers/**").hasAnyAuthority("create_edit_delete_customer")
                 .antMatchers("/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -57,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/access-error");
+                .exceptionHandling().accessDeniedPage("/error/access-error");
     }
 
 }

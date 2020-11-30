@@ -18,7 +18,7 @@
     </Action>
     <Action>
         <Id>3</Id>
-        <Name>create_edit_delete_сustomer</Name>
+        <Name>create_edit_delete_customer</Name>
         <Description>Создание, редактирование и удаление клиента</Description>
     </Action>
     <Action>

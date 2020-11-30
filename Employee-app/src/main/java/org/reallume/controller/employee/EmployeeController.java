@@ -54,7 +54,6 @@ public class EmployeeController {
 
     }
 
-    //employee main page
     @GetMapping(value = "/employees")
     public String rightsPage(Model model) {
 
@@ -63,7 +62,6 @@ public class EmployeeController {
         return "employee/employees-page";
     }
 
-    //create an employee - page
     @GetMapping(value = "/employees/create")
     public String createEmployeePage(Model model) {
 
@@ -73,9 +71,8 @@ public class EmployeeController {
         return "employee/create-page";
     }
 
-
     @PostMapping(value = "/employees/create")
-    public String createEmployee(@ModelAttribute Employee newEmployee, @RequestParam Long selectedRights) throws NoSuchAlgorithmException {
+    public String createEmployee(@ModelAttribute Employee newEmployee, @RequestParam Long selectedRights) {
 
         newEmployee.setSalt(SecurityController.generateSalt());
         newEmployee.setPassword(SecurityController.getSaltPassword(newEmployee.getPassword(), newEmployee.getSalt()));
@@ -87,7 +84,6 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
-    //edit an employee - page
     @GetMapping(value = "/employees/{employee_id}/edit")
     public String editEmployeePage(@PathVariable Long employee_id, Model model) {
 
@@ -115,7 +111,6 @@ public class EmployeeController {
         return "redirect:/employees/" + employee_id.toString() + "/edit";
     }
 
-    @Transactional
     @GetMapping(value = "/employees/{employee_id}/delete")
     public String deleteEmployee(@PathVariable Long employee_id) {
 

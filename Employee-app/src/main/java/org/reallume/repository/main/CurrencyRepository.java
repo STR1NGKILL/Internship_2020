@@ -8,5 +8,4 @@ import java.util.List;
 public interface CurrencyRepository extends CrudRepository<Currency, Long> {
 
     List<Currency> findAll();
-
 }
