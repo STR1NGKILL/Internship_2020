@@ -76,6 +76,7 @@ public class EmployeeController {
 
         newEmployee.setSalt(SecurityController.generateSalt());
         newEmployee.setPassword(SecurityController.getSaltPassword(newEmployee.getPassword(), newEmployee.getSalt()));
+        newEmployee.setActivity(true);
 
         newEmployee.setRights(rightsRepository.findById(selectedRights).get());
 
@@ -117,6 +118,18 @@ public class EmployeeController {
         employeeRepository.deleteById(employee_id);
 
         return "redirect:/employees";
+    }
+
+    @GetMapping(value = "/employees/{employee_id}/activity/set")
+    public String setActivityEmployee(@PathVariable Long employee_id) {
+
+        Employee employeeToEdit = employeeRepository.findById(employee_id).get();
+
+        employeeToEdit.setActivity(!employeeToEdit.getActivity().equals(true));
+
+        employeeRepository.save(employeeToEdit);
+
+        return "redirect:/employees/" + employee_id.toString() + "/edit";
     }
 
 }

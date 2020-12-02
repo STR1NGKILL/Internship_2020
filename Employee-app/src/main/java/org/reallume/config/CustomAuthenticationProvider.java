@@ -19,13 +19,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.reallume.controller.SecurityController.getSaltPassword;
-
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -33,6 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String defaultAuthority = "main-page-access";
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
+
         List<GrantedAuthority> authorities;
 
         Optional<Employee> foundEmployee = employeeRepository.findByLogin(name);
@@ -56,10 +57,16 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
 
-            if (passwordEncoder.matches(password + salt, saltPassword))
-                return new UsernamePasswordAuthenticationToken(name, password, authorities);
-            else
+            if (passwordEncoder.matches(password + salt, saltPassword)) {
+
+                if (foundEmployee.get().getActivity().equals(false))
+                    throw new BadCredentialsException("External system authentication failed");
+                else
+                    return new UsernamePasswordAuthenticationToken(name, password, authorities);
+
+            } else
                 throw new BadCredentialsException("External system authentication failed");
+
         }
         return null;
     }
@@ -68,5 +75,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
+
+
 
 }

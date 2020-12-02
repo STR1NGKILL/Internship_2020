@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.swing.text.StyledEditorKit;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -38,6 +39,9 @@ public class Employee {
     private String salt;
 
     @NotNull
+    private Boolean activity;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="rights_id")
     private Rights rights;
@@ -50,6 +54,7 @@ public class Employee {
         this.password = password;
         this.salt = salt;
         this.rights = rights;
+        this.activity = true;
     }
 
 }
