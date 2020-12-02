@@ -17,10 +17,6 @@
 buildSrc/.gradle
 buildSrc/build
 Employee-app/build
-Employee-app/.gradle
 Customer-app/build
-Customer-app/.gradle
 Employee-db-initialization/build
-Employee-db-initialization/.gradle
 Main-db-initialization/build
-Main-db-initialization/.gradle
