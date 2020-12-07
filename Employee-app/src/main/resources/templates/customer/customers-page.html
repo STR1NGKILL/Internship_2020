@@ -52,6 +52,7 @@
                     <th class="align-middle">Имя</th>
                     <th class="align-middle">Фамилия</th>
                     <th class="align-middle">Отчество</th>
+                    <th class="align-middle">Логин</th>
                     <th class="align-middle">Действия</th>
                 </tr>
                 </thead>
@@ -62,6 +63,7 @@
                     <td th:utext="${customer.firstName}">...</td>
                     <td th:utext="${customer.secondName}">...</td>
                     <td th:utext="${customer.patronymic}">...</td>
+                    <td th:utext="${customer.login}">...</td>
                     <td class="rights" style="text-align: center; width: 5rem;">
                         <a th:href="@{/customers/{customer_id}/edit/(customer_id=${customer.id})}" style="color: green;" type="button"
                         ><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;

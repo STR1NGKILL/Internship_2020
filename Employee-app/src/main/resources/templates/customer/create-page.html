@@ -37,6 +37,9 @@
 
             <form th:action="@{/customers/create}" th:method="POST" th:object="${newCustomer}" id="form" enctype="multipart/form-data">
 
+                <label for="login">Логин</label>
+                <input class="form-control rounded border input-group-lg" readonly id="login" th:field="*{login}" th:value="${newCustomer.login}" style="width: 250px"/>
+                <br/>
                 <label for="firstName">Имя</label>
                 <input class="form-control rounded border input-group-lg" required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
                 <br/>
@@ -49,9 +52,9 @@
                 <label for="birthday">Дата рождения</label>
                 <input class="form-control rounded border input-group-lg" required id="birthday" type="date" name="birthdayStringValue" placeholder="Введите дату рождения" style="width: 250px"/>
                 <br/>
-                <label for="document">Документ подтверждающий личность (например, паспорт)</label>
+                <label for="document">Документ подтверждающий личность (например, паспорт) формата .png</label>
                 <br/>
-                <input class="custom-file" required id="document" type="file" name="file" placeholder="Выберите документ" style="width: 250px"/>
+                <input class="custom-file" required id="document" type="file" name="file" placeholder="Выберите документ" style="width: 350px"/>
                 <br/>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;

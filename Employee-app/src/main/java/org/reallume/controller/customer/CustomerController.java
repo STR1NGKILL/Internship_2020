@@ -1,5 +1,6 @@
 package org.reallume.controller.customer;
 
+import org.reallume.controller.common.SecurityController;
 import org.reallume.domain.main.Customer;
 import org.reallume.repository.main.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class CustomerController {
 
         String birthdayStringValue = "";
 
+        Customer newCustomer = new Customer();
+        newCustomer.setLogin(SecurityController.generateLogin());
+
         model.addAttribute("birthdayStringValue", birthdayStringValue);
-        model.addAttribute("newCustomer", new Customer());
+        model.addAttribute("newCustomer", newCustomer);
 
 
         return "customer/create-page";
@@ -52,6 +56,12 @@ public class CustomerController {
 
         newCustomer.setDocument(file.getBytes());
         newCustomer.setBirthday(converterStringToDate(birthdayStringValue));
+
+        String salt = SecurityController.generateSalt();
+
+        newCustomer.setSalt(salt);
+        newCustomer.setPassword(SecurityController.getSaltPassword(SecurityController.generatePassword(), salt));
+
         customerRepository.save(newCustomer);
 
         return "redirect:/customers";

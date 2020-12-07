@@ -2,7 +2,7 @@ package org.reallume.controller.employee;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.reallume.controller.SecurityController;
+import org.reallume.controller.common.SecurityController;
 import org.reallume.domain.employee.Employee;
 import org.reallume.domain.employee.Rights;
 import org.reallume.repository.employee.EmployeeRepository;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 
 @Controller

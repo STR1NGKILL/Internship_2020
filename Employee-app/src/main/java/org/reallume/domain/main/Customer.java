@@ -38,18 +38,30 @@ public class Customer {
     @NotNull
     private Date birthday;
 
+    @NotNull
+    private String login;
+
+    @NotNull
+    private String password;
+
+    @NotNull
+    private String salt;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Account> accounts;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cards;
 
-    public Customer(String firstName, String secondName, String patronymic, byte[] document, Date birthday) {
+    public Customer(String firstName, String secondName, String patronymic, byte[] document, Date birthday, String login, String password, String salt) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.patronymic = patronymic;
         this.document = document;
         this.birthday = birthday;
+        this.login = login;
+        this.password = password;
+        this.salt = salt;
     }
 
 }

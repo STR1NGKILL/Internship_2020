@@ -1,4 +1,4 @@
-package org.reallume.controller;
+package org.reallume.controller.common;
 
 import org.reallume.repository.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -37,6 +37,9 @@
 
             <form th:action="@{/customers/{customer_id}/edit/(customer_id=${currentCustomer.id})}" th:method="POST" th:object="${currentCustomer}" id="form" enctype="multipart/form-data">
 
+                <label for="login">Логин</label>
+                <a class="form-control rounded border input-group-lg" id="login" th:text="${currentCustomer.login}" style="width: 250px"></a>
+                <br/>
                 <label for="firstName">Имя</label>
                 <input class="form-control rounded border input-group-lg" required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
                 <br/>
@@ -53,7 +56,7 @@
                 <br/>
                 <div class="custom-control-inline" id="document">
                     <input th:if="${currentCustomer.getDocument() == null}" class="custom-file" required  type="file" name="file" placeholder="Выберите документ" style="width: 250px"/>
-                    <input th:if="${currentCustomer.getDocument() != null}" class="custom-file" type="file" name="file" placeholder="Выберите документ" style="width: 250px"/>
+                    <input th:if="${currentCustomer.getDocument() != null}" class="custom-file" type="file" name="file" placeholder="Выберите документ" style="width: 350px"/>
                     <div style="padding-left: 1rem">
                         <a th:href="@{/customers/{customer_id}/edit/file/download/(customer_id=${currentCustomer.id})}" type="button" class="btn btn-success btn-sm" style="width: 7rem; color: white;"><i class="fas fa-download"></i>&nbsp;&nbsp;Скачать</a>
                     </div>

@@ -1,4 +1,4 @@
-package org.reallume.controller;
+package org.reallume.controller.common;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +21,20 @@ public class SecurityController extends HttpServlet {
         return "common/access-denied-page";
     }
 
+    public static String generateLogin(){
+        String login = UUID.randomUUID().toString();
+        login = login.substring(0, login.length() - 25);
+        login = login.replace("-", "");
+        return login;
+    }
+
+    public static String generatePassword(){
+        String password = UUID.randomUUID().toString();
+        password = password.substring(0, password.length() - 15);
+        password = password.replace("-", "");
+        return password;
+    }
+
     public static String generateSalt(){
         String salt = UUID.randomUUID().toString();
         salt = salt.substring(0, salt.length() - 20);
@@ -32,5 +46,7 @@ public class SecurityController extends HttpServlet {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password + salt);
     }
+
+
 
 }
