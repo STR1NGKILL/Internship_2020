@@ -113,6 +113,11 @@ public class CustomerController {
 
         currentCustomer.setBirthday(converterStringToDate(birthdayStringValue));
         currentCustomer.setId(customer_id);
+        currentCustomer.setLogin(customerToEdit.getLogin());
+        currentCustomer.setPassword(customerToEdit.getPassword());
+        currentCustomer.setSalt(customerToEdit.getSalt());
+        currentCustomer.setAccounts(customerToEdit.getAccounts());
+        currentCustomer.setCards(customerToEdit.getCards());
 
         customerRepository.save(currentCustomer);
 
