@@ -2,11 +2,14 @@ package org.reallume.controller.customer;
 
 import org.reallume.controller.common.SecurityController;
 import org.reallume.domain.main.Customer;
+import org.reallume.repository.employee.EmployeeRepository;
 import org.reallume.repository.main.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -26,25 +30,39 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @GetMapping(value = "/customers")
-    public String rightsPage(Model model) {
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
+    @GetMapping(value = "/customers")
+    public String rightsPage(Authentication authentication, Model model) {
+
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("customers", customerRepository.findAll());
 
         return "customer/customers-page";
     }
 
     @GetMapping(value = "/customers/create")
-    public String createCustomerPage(Model model) {
+    public String createCustomerPage(Authentication authentication, Model model) {
 
         String birthdayStringValue = "";
 
         Customer newCustomer = new Customer();
         newCustomer.setLogin(SecurityController.generateLogin());
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("birthdayStringValue", birthdayStringValue);
         model.addAttribute("newCustomer", newCustomer);
-
 
         return "customer/create-page";
     }
@@ -68,8 +86,14 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/customers/{customer_id}/edit")
-    public String editCustomerPage(@PathVariable Long customer_id, Model model) {
+    public String editCustomerPage(@PathVariable Long customer_id, Model model, Authentication authentication) {
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("birthdayStringValue", converterDateToString(customerRepository.findById(customer_id).get().getBirthday()));
         model.addAttribute("currentCustomer", customerRepository.findById(customer_id).get());
 

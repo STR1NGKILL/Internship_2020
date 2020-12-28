@@ -19,6 +19,58 @@
 <body>
 
 <div class="container-fluid">
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+            <nav class="navbar navbar-expand-lg navbar-dark navbar-inverse shadow-sm border rounded-bottom bg-success" style="background: #00b300; width: 100rem">
+                <a class="navbar-brand" style="color: white" href="@{/main}"><i class="fas fa-university"></i> App For Employee</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto" style="width: 70rem">
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto" style="width: auto">
+                        <li class="nav-item text-light">
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}"></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
+                        <li class="nav-item d-flex">
+                            <a class="nav-link p-0 m-0" href="#" ></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="navigations-headers-01" href="#" role="button" data-toggle="dropdown" >
+                                <i class="fas fa-user-circle" style="font-size: 20pt;"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navigations-headers-01" style="margin-top: 0.5rem; margin-left: 1rem">
+                                <a class="dropdown-item" th:href="@{/profile/edit/}"><i class="far fa-address-card"></i>
+                                    Профиль
+                                </a>
+                                <a class="dropdown-item" th:href="@{/logout}">
+                                    <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
+                                        Завершить сеанс
+                                    </font>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col"></div>
+    </div>
+
     <div class="row">
 
         <div class="col"></div>

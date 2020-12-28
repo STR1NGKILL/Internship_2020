@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Главная</title>
@@ -17,49 +17,66 @@
 <body>
 
 <div class="container-fluid">
+
     <div class="row">
-
         <div class="col"></div>
-
-        <div class="col-auto" style="width: 23rem">
-
-                <div class="list-group border shadow-sm" style="background: white; margin-top: 3rem">
-                    <a class="list-group-item list-group-item-action disabled text-center border-top-0 border-left-0 border-right-0" style="background: #00b300; color: white">
-                        <i class="fas fa-list-ul"></i>
-                    </a>
-
-                    <a th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}" th:text="Права" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
-                    <a th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}" th:text="Сотрудники" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
-                    <a th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}" th:text="Клиенты" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+        <div class="col-auto">
+            <nav class="navbar navbar-expand-lg navbar-dark navbar-inverse shadow-sm border rounded-bottom bg-success" style="background: #00b300; width: 100rem">
+                <a class="navbar-brand" style="color: white" th:href="@{/main}"><i class="fas fa-university"></i> App For Employee</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto" style="width: 70rem"></ul>
+                    <ul class="navbar-nav mr-auto" style="width: auto">
+                        <li class="nav-item text-light">
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}"></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
+                        <li class="nav-item d-flex">
+                            <a class="nav-link p-0 m-0" href="#" ></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="navigations-headers-01" href="#" role="button" data-toggle="dropdown" >
+                                <i class="fas fa-user-circle" style="font-size: 20pt;"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navigations-headers-01" style="margin-top: 0.5rem; margin-left: 1rem">
+                                <a class="dropdown-item" th:href="@{/profile/edit/}"><i class="far fa-address-card"></i>
+                                    Профиль
+                                </a>
+                                <a class="dropdown-item" th:href="@{/logout}">
+                                    <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
+                                        Завершить сеанс
+                                    </font>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+            </nav>
         </div>
+        <div class="col"></div>
+    </div>
 
-        <div class="col-auto" style="width: 70rem" >
-        </div>
-
-        <div class="col-auto" style="width: auto">
-
-            <div class="list-group border shadow-sm" style="background: white; margin-top: 3rem">
-                <a class="nav-link dropdown-toggle" id="dropdown_employee" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                   style="background: #00b300; color: white"
-                   th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName} + ' ' + ${loggedEmployee.patronymic}">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto" style="width: 23rem;">
+            <div class="list-group border shadow-sm" style="background: white; margin-top: 1rem">
+                <a class="list-group-item list-group-item-action disabled text-center border-top-0 border-left-0 border-right-0 bg-success" style="color: white">
+                    <i class="fas fa-list-ul"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_employee">
-                    <a class="dropdown-item" href="#"><i class="far fa-address-card"></i>
-                        Профиль
-                    </a>
-                    <a class="dropdown-item" th:href="@{/logout}">
-                        <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
-                            Завершить сеанс</font>
-                    </a>
-                </div>
+                <a th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}" th:text="Клиенты" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                <a th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}" th:text="Сотрудники" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                <a th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}" th:text="Права" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
             </div>
         </div>
-
+        <div class="col-auto" style="width: 79rem"></div>
         <div class="col"></div>
-
     </div>
+
 </div>
+
 
 
 <!--Basic-->

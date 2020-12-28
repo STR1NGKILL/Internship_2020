@@ -26,10 +26,9 @@ public class MainPageController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        model.addAttribute("authorities", authorities);
         model.addAttribute("loggedEmployeeAuthorities", authentication.getAuthorities());
         model.addAttribute("loggedEmployee", employeeRepository.findByLogin(login).get());
-        model.addAttribute("authorities", authorities);
-
 
         return "common/main-page";
     }

@@ -31,7 +31,7 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
@@ -73,21 +73,21 @@
         <div class="col"></div>
 
         <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
-            <a th:href="@{/employees}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+            <a th:href="@{/main}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-auto" style="width: 70rem" >
 
             <div>
                 <br/>
-                <h5 class="display-4">Редактирование данных сотрудника</h5>
+                <h5 class="display-4">Редактирование профиля сотрудника</h5>
                 <br/><br/>
             </div>
 
             <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования</h5></label>
             <br/><br/>
 
-            <form th:action="@{/employees/{employee_id}/edit/(employee_id=${currentEmployee.id})}" th:method="POST" th:object="${currentEmployee}" id="form">
+            <form th:action="@{/profile/edit}" th:method="POST" th:object="${loggedEmployee}" id="form">
 
                 <label for="firstName">Имя</label>
                 <input class="form-control rounded border input-group-lg" required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
@@ -112,33 +112,31 @@
                     </option>
 
                     <option th:each="rights : ${allRights}"
-                            th:if="${rights.id == currentEmployee.rights.id}" selected
+                            th:if="${rights.id == loggedEmployee.rights.id}" selected
                             th:text="${rights.getName()}"
                             th:value="${rights.id}">
                     </option>
 
                     <option th:each="rights : ${allRights}"
-                            th:if="${rights.id != currentEmployee.rights.id}"
+                            th:if="${rights.id != loggedEmployee.rights.id}"
                             th:text="${rights.getName()}"
                             th:value="${rights.id}">
                     </option>
                 </select>
-                <input th:if="${!authorities.contains('create_edit_delete_rights')}" class="form-control rounded border input-group-lg"
-                           readonly th:field="*{rights}" th:value="${currentEmployee.rights}" th:text="${currentEmployee.rights.getName()}" style="width: 250px"/>
+                <input hidden th:if="${!authorities.contains('create_edit_delete_rights')}" class="form-control rounded border input-group-lg" th:name="selectedRights" th:value="${loggedEmployee.rights.id}" />
+                <a th:if="${!authorities.contains('create_edit_delete_rights')}" class="form-control rounded border input-group-lg" th:text="${loggedEmployee.rights.getName()}" style="width: 250px"></a>
                 <br/>
                 <label for="activity">Состояние аккаунта</label>
                 <div id="activity">
-                    <a th:if="${currentEmployee.getActivity().equals(true)}" class="form-control rounded border input-group-lg" th:text="Активный" style="width: 250px"></a>
-                    <a th:if="${currentEmployee.getActivity().equals(false)}" class="form-control rounded border input-group-lg" th:text="Заблокированный" style="width: 250px"></a>
+                    <a th:if="${loggedEmployee.getActivity().equals(true)}" class="form-control rounded border input-group-lg" th:text="Активный" style="width: 250px"></a>
+                    <a th:if="${loggedEmployee.getActivity().equals(false)}" class="form-control rounded border input-group-lg" th:text="Заблокированный" style="width: 250px"></a>
                 </div>
                 <br/>
 
                 <div class="currentEmployee_action" style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
-                    <a th:href="@{/employees/{employee_id}/delete/(employee_id=${currentEmployee.id})}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить сотрудника</a>
-                    <a th:if="${currentEmployee.getActivity().equals(true)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="blockEmployeeBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-ban"></i>&nbsp;&nbsp;Заблокировать</a>
-                    <a th:if="${currentEmployee.getActivity().equals(false)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="unblockEmployeeBtn btn btn-warning btn-bg" style="width: 12rem; color: white;"><i class="fas fa-unlock"></i>&nbsp;&nbsp;Разблокировать</a>
+                    <a th:href="@{/profile/delete/}" th:if="${authorities.contains('create_edit_delete_employee')}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить профиль</a>
                 </div>
             </form>
 
@@ -152,75 +150,22 @@
     </div>
 </div>
 
-<!-- Modal popup - block the current employee-->
-<div class="blockEmployeeForm">
-    <div class="modal fade" id="blockEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div style="text-align: right;margin-right: 20px;"></div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="blockEmployeeModalLabel">Блокировка профиля сотрудника</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="alert alert-danger" >
-                        Вы действительно хотите заблокировать данного сотрудника?
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a href="" class="btn btn-danger" id="blockRef">Заблокировать</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal popup - unblock the current employee-->
-<div class="unblockEmployeeForm">
-    <div class="modal fade" id="unblockEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div style="text-align: right;margin-right: 20px;"></div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="unblockEmployeeModalLabel">Разблокировка профиля сотрудника</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="alert alert-danger" >
-                        Вы действительно хотите разблокировать данного сотрудника?
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a href="" class="btn btn-danger" id="unblockRef">Разблокировать</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- Modal popup - delete the current employee-->
-<div class="deleteEmployeeForm">
+<div class="deleteEmployeeForm" th:if="${authorities.contains('create_edit_delete_employee')}">
     <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div style="text-align: right;margin-right: 20px;"></div>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteEmployeeModalLabel">Удаление сотрудника</h5>
+                    <h5 class="modal-title" id="deleteEmployeeModalLabel">Удаление профиля сотрудника</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="alert alert-danger" >
-                        Вы действительно хотите удалить данного сотрудника?
+                        Вы действительно хотите удалить свой профиль?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -246,30 +191,6 @@
             var href = $(this).attr('href');
             $('#deleteEmployeeModal #delRef').attr('href', href);
             $('#deleteEmployeeModal').modal();
-        })
-    });
-</script>
-
-<!--modal popup script to block current employee-->
-<script>
-    $(document).ready(function () {
-        $('.currentEmployee_action .blockEmployeeBtn ').on('click', function (event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#blockEmployeeModal #blockRef').attr('href', href);
-            $('#blockEmployeeModal').modal();
-        })
-    });
-</script>
-
-<!--modal popup script to unblock current employee-->
-<script>
-    $(document).ready(function () {
-        $('.currentEmployee_action .unblockEmployeeBtn ').on('click', function (event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#unblockEmployeeModal #unblockRef').attr('href', href);
-            $('#unblockEmployeeModal').modal();
         })
     });
 </script>

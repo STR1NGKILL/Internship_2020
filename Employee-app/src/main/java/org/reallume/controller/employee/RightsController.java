@@ -10,6 +10,8 @@ import org.reallume.repository.employee.ActionRepository;
 import org.reallume.repository.employee.EmployeeRepository;
 import org.reallume.repository.employee.RightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -51,13 +54,19 @@ public class RightsController {
     }
 
     @GetMapping(value = "/rights")
-    public String rightsPage(Model model) {
+    public String rightsPage(Model model, Authentication authentication) {
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("allRights", rightsRepository.findAll());
         model.addAttribute("commonActions", actionRepository.findAll());
         System.out.println(rightsRepository.findById(0L).get().getActionOfRights());
 
-        return "rights/rights-page";
+        return "/rights/rights-page";
     }
 
     @PostMapping(value = "/rights/create")
@@ -87,15 +96,21 @@ public class RightsController {
     }
 
     @GetMapping(value = "/rights/{rights_id}/edit")
-    public String editRightsPage(@PathVariable Long rights_id, Model model) {
+    public String editRightsPage(@PathVariable Long rights_id, Model model, Authentication authentication) {
 
         Rights currentRights = rightsRepository.findById(rights_id).get();
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("currentRights", currentRights);
         model.addAttribute("commonActions", actionRepository.findAll());
         model.addAttribute("employeeOfCurrentRights", employeeRepository.findByRights_Id(rights_id));
 
-        return "rights/edit-page";
+        return "/rights/edit-page";
     }
 
     @PostMapping(value = "/rights/{rights_id}/edit")

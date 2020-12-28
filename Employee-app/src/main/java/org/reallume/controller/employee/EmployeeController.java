@@ -8,11 +8,14 @@ import org.reallume.domain.employee.Rights;
 import org.reallume.repository.employee.EmployeeRepository;
 import org.reallume.repository.employee.RightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.stream.Collectors;
 
 @Controller
 public class EmployeeController {
@@ -54,16 +57,28 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/employees")
-    public String rightsPage(Model model) {
+    public String employeesPage(Model model, Authentication authentication) {
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("employees", employeeRepository.findAll());
 
         return "employee/employees-page";
     }
 
     @GetMapping(value = "/employees/create")
-    public String createEmployeePage(Model model) {
+    public String createEmployeePage(Model model, Authentication authentication) {
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("authorities", authorities);
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("allRights", rightsRepository.findAll());
         model.addAttribute("newEmployee", new Employee());
 
@@ -85,8 +100,14 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/employees/{employee_id}/edit")
-    public String editEmployeePage(@PathVariable Long employee_id, Model model) {
+    public String editEmployeePage(@PathVariable Long employee_id, Model model, Authentication authentication) {
 
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
+        model.addAttribute("authorities", authorities);
         model.addAttribute("allRights", rightsRepository.findAll());
         model.addAttribute("currentEmployee", employeeRepository.findById(employee_id).get());
 
@@ -96,7 +117,7 @@ public class EmployeeController {
     @PostMapping(value = "/employees/{employee_id}/edit")
     public String editEmployee(@PathVariable Long employee_id,
                                @ModelAttribute("currentEmployee") CurrentEmployee currentEmployee,
-                               @RequestParam Long selectedRights) throws NoSuchAlgorithmException {
+                               @RequestParam Long selectedRights) {
 
         Employee employeeToEdit = employeeRepository.findById(employee_id).get();
         employeeToEdit.setFirstName(currentEmployee.getFirstName());
