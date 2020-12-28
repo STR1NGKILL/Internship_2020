@@ -31,4 +31,9 @@
         <Name>create_edit_delete_card</Name>
         <Description>Создание, редактирование и удаление карт</Description>
     </Action>
+    <Action>
+        <Id>5</Id>
+        <Name>create_edit_delete_currency</Name>
+        <Description>Создание, редактирование и удаление валют</Description>
+    </Action>
 </Actions>

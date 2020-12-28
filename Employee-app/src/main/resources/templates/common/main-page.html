@@ -69,6 +69,9 @@
                 <a th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}" th:text="Клиенты" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
                 <a th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}" th:text="Сотрудники" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
                 <a th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}" th:text="Права" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                <a th:if="${authorities.contains('create_edit_delete_account')}" href="#" th:text="Счета" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                <a th:if="${authorities.contains('create_edit_delete_card')}" href="#" th:text="Карты" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                <a th:if="${authorities.contains('create_edit_delete_currency')}" href="#" th:text="Валюта" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
             </div>
         </div>
         <div class="col-auto" style="width: 79rem"></div>
