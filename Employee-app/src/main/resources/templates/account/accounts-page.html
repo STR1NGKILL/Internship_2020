@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование схемы прав</title>
+    <title>Сотрудники</title>
 
 
     <!--Basic-->
@@ -37,10 +37,10 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav mr-auto" style="width: auto">
@@ -79,95 +79,59 @@
         <div class="col"></div>
 
         <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
-            <a th:href="@{/rights}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+            <a th:href="@{/main}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-auto" style="width: 70rem" >
 
             <div>
                 <br/>
-                <h5 class="display-4">Редактирование схемы прав</h5>
-                <h5 class="display-4" style="font-size: 30pt">"<span th:text="${currentRights.name}"></span>"</h5>
+                <h5 class="display-4">Счета</h5>
                 <br/><br/>
             </div>
 
-            <form th:action="@{/rights/{rights_id}/edit/(rights_id=${currentRights.id})}" method="post" th:object="${currentRights}">
+            <div class="text-right createRights" >
+                <a th:href="@{/accounts/create}" type="button" class="btn btn-success btn-sm createRightsBtn" style="width: 10rem; color: white;">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Новый счёт
+                </a>
+            </div>
 
-                <label for="name">Имя схемы прав</label>
-                <input class="form-control rounded border input-group-lg" required style="width: 20rem; height: 30px" type="text" id="name" th:field="*{name}" value="" placeholder="Введите имя схемы прав" />
-                <br/>
+            <div>
+                <h5 class="display-4" style="font-size: 20pt">Список счетов</h5>
+            </div>
 
-                <table class="table table-hover table-bordered" id="actions_table" style="width:100%;" th:object="${currentRights}">
-                    <h5 class="display-4" style="font-size: 20pt">Операции текущей схемы прав</h5>
-                    <thead>
-                    <tr class="table" style="background: #00b300; color: white">
-                        <th class="align-middle">№</th>
-                        <th class="align-middle">Имя</th>
-                        <th class="align-middle">Описание</th>
-                        <th class="align-middle">Статус</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:if="${currentRights != null || !currentRights.actionOfRights.isEmpty()}"
-                        th:each="element, state : ${currentRights.actionOfRights}">
-                        <td th:utext="${state.index}">...</td>
-                        <td th:utext="${element.action.name}">...</td>
-                        <td th:utext="${element.action.description}">...</td>
-                        <td style="text-align: center; width: 3rem;">
-                            <input type="checkbox" th:field="*{actionOfRights[__${state.index}__].status}" th:value="${element.status}">
-                            <input type="hidden" th:field="*{actionOfRights[__${state.index}__].id}" th:value="${element.id}">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br/>
-                <div class="currentRights_actions" style="text-align: right;">
-                    <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
-                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>&nbsp;
-                    <a th:href="@{/rights/{rights_id}/delete/(rights_id=${currentRights.id})}" type="button" class="deleteRightsBtn btn btn-danger btn-bg" style="width: 10rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить схему</a>
-                </div>
-            </form>
+            <table class="table table-hover table-bordered" id="actions_table" style="width:100%;">
+                <thead>
+                <tr class="table" style="background: #00b300; color: white">
+                    <th class="align-middle">№</th>
+                    <th class="align-middle">Номер счёта</th>
+                    <th class="align-middle">ФИО клиента</th>
+                    <th class="align-middle">Дата открытия</th>
+                    <th class="align-middle">Дата закрытия</th>
+                    <th class="align-middle">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${accounts != null || !accounts.isEmpty()}"
+                    th:each="account, state : ${accounts}">
+                    <td th:utext="${state.index}" style="width: 4rem">...</td>
+                    <td th:utext="${account.number}">...</td>
+                    <td th:utext="${account.customer.secondName} + ' ' + ${account.customer.firstName} + ' ' + ${account.customer.patronymic}">...</td>
+                    <td th:utext="${account.openDate}">...</td>
+                    <td th:utext="${account.closeDate}">...</td>
+                    <td class="accounts" style="text-align: center; width: 5rem;">
+                        <a th:href="@{/accounts/{account_id}/edit/(account_id=${account.id})}" style="color: green;" type="button"
+                        ><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
 
         <div class="col-auto" style="width: 4rem;"></div>
         <div class="col"></div>
 
-    </div>
-</div>
-
-
-<!-- Modal popup - delete current rights-->
-<div class="deleteRightsForm">
-    <div class="modal fade" id="deleteRightsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div style="text-align: right;margin-right: 20px;"></div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteRightsModalLabel">Удаление схемы прав</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="alert alert-danger" th:if="${employeeOfCurrentRights.isEmpty()}" >
-                        Вы действительно хотите удалить схему прав "<span th:text="${currentRights.getName()}"></span>" ?
-                    </p>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
-                        <strong>Обратите внимание!</strong>
-                        <span th:if="${!employeeOfCurrentRights.isEmpty()}">Данная схема прав привязана к сотруднику(ам). Её удаление невозможно.</span>
-                        <span th:if="${employeeOfCurrentRights.isEmpty()}">Данная схема прав не привязана к сотруднику(ам). Её удаление возможно.</span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a th:if="${employeeOfCurrentRights.isEmpty()}" href="" class="btn btn-danger" id="delRef">Удалить</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -188,19 +152,19 @@
             "pagingType": "full_numbers",
             "paging": false,
             "ordering": true,
-            "columnDefs": [{ orderable: false, "targets": -1 },{ orderable: false, "targets": -2 }],
-            "info": true,
+            "info": false,
+            "columnDefs": [{ orderable: false, "targets": -1 }],
             "searchable": true, "targets": 0,
             "language": {
                 "processing": "Подождите...",
-                "search": "Поиск операции:",
+                "search": "Поиск счетов:",
                 "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
                 "infoEmpty": "Записи с 0 до 0 (из 0 записей)",
                 "infoFiltered": "(отфильтровано из _MAX_ записей)",
                 "infoPostFix": "",
                 "loadingRecords": "Загрузка записей...",
                 "zeroRecords": "Записи отсутствуют.",
-                "emptyTable": "Список доступных операций пуст",
+                "emptyTable": "Список счетов пуст",
                 "paginate": {
                     "first": "Первая",
                     "previous": "Предыдущая",
@@ -213,18 +177,6 @@
                 }
             }
         });
-    });
-</script>
-
-<!--modal popup script to delete current rights-->
-<script>
-    $(document).ready(function () {
-        $('.currentRights_actions .deleteRightsBtn ').on('click', function (event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#deleteRightsModal #delRef').attr('href', href);
-            $('#deleteRightsModal').modal();
-        })
     });
 </script>
 

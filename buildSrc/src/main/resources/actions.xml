@@ -32,7 +32,7 @@
         <Description>Создание, редактирование и удаление карт</Description>
     </Action>
     <Action>
-        <Id>5</Id>
+        <Id>6</Id>
         <Name>create_edit_delete_currency</Name>
         <Description>Создание, редактирование и удаление валют</Description>
     </Action>

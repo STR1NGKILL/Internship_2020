@@ -39,6 +39,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
+                            </li>
                         </ul>
                         <ul class="navbar-nav mr-auto" style="width: auto">
                             <li class="nav-item text-light">
