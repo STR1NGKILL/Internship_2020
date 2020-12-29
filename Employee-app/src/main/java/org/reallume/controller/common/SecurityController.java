@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServlet;
+import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -47,6 +48,18 @@ public class SecurityController extends HttpServlet {
         return passwordEncoder.encode(password + salt);
     }
 
+    public static String generateAccountNumber(Integer length){
+
+        StringBuilder accountNumber = new StringBuilder();
+        Random random = new Random();
+
+        while (length >= 0){
+            accountNumber.append(random.nextInt(9));
+            length--;
+        }
+
+        return accountNumber.toString();
+    }
 
 
 }

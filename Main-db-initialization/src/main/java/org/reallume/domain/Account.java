@@ -1,12 +1,12 @@
 package org.reallume.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Calendar;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 
 @Entity
@@ -26,10 +26,10 @@ public class Account {
     private long currencyQuantity;
 
     @NotNull
-    private Calendar openDate;
+    private Date openDate;
 
     @NotNull
-    private Calendar closeDate;
+    private Date closeDate;
 
     @NotNull
     private boolean status;
@@ -48,7 +48,7 @@ public class Account {
     @JoinColumn(name="currency_id")
     private Currency currency;
 
-    public Account(String number, Currency currency, long currencyQuantity, Calendar accountOpenDate, Calendar accountCloseDate, boolean accountStatus) {
+    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, boolean accountStatus) {
         this.number = number;
         this.currency = currency;
         this.currencyQuantity = currencyQuantity;

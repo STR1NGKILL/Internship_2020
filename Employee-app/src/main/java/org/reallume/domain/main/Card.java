@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
+import java.util.Date;
 
 
 @Entity
@@ -24,11 +24,11 @@ public class Card {
 
     @NotNull
     @Column(name = "open_date")
-    private Calendar openDate;
+    private Date openDate;
 
     @NotNull
     @Column(name = "close_date")
-    private Calendar closeDate;
+    private Date closeDate;
 
     @NotNull
     private boolean status;
@@ -43,7 +43,7 @@ public class Card {
     @JoinColumn(name="account_id")
     private Account account;
 
-    public Card(String number, Calendar openDate, Calendar closeDate, boolean status) {
+    public Card(String number, Date openDate, Date closeDate, boolean status) {
         this.number = number;
         this.openDate = openDate;
         this.closeDate = closeDate;

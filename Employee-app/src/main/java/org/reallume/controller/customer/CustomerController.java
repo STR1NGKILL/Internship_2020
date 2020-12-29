@@ -53,7 +53,13 @@ public class CustomerController {
         String birthdayStringValue = "";
 
         Customer newCustomer = new Customer();
-        newCustomer.setLogin(SecurityController.generateLogin());
+
+        String generatedLogin = SecurityController.generateLogin();
+
+        while(customerRepository.findByLogin(generatedLogin).isPresent())
+            generatedLogin = SecurityController.generateLogin();
+
+        newCustomer.setLogin(generatedLogin);
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
