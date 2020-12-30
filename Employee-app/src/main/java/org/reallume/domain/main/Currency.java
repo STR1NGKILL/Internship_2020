@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "currencies")
@@ -20,8 +21,15 @@ public class Currency {
     @NotNull
     private String name;
 
-    public Currency(String name) {
-        this.name = name;
-    }
+    @NotNull
+    private String sign;
 
+    @NotNull
+    private BigDecimal value;
+
+    public Currency(String name, String sign, BigDecimal value) {
+        this.name = name;
+        this.sign = sign;
+        this.value = value;
+    }
 }

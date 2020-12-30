@@ -60,7 +60,7 @@ public class XmlReaderAndDbUploaderCurrencies {
                 String value = element.getElementsByTagName("Value").item(0).getChildNodes().item(0).getNodeValue();
 
                 queries.add(
-                        "INSERT INTO russian_currency_rate(id,name,sign,value) " +
+                        "INSERT INTO currencies(id,name,sign,value) " +
                                 "VALUES ('" + id + "','" + name + "','" + sign + "','" + value + "') ON CONFLICT DO NOTHING ;");
             }
 
