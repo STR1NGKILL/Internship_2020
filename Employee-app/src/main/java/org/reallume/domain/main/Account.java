@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -52,13 +53,17 @@ public class Account {
     @JoinColumn(name="currency_id")
     private Currency currency;
 
-    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, boolean accountStatus) {
+    @NotNull
+    private BigDecimal amount;
+
+    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, boolean accountStatus, BigDecimal amount) {
         this.number = number;
         this.currency = currency;
         this.currencyQuantity = currencyQuantity;
         this.openDate = accountOpenDate;
         this.closeDate = accountCloseDate;
         this.status = accountStatus;
+        this.amount = amount;
     }
 
 }

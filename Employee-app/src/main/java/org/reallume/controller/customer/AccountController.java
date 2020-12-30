@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,13 +52,22 @@ public class AccountController {
         return "account/accounts-page";
     }
 
-    /*@GetMapping(value = "/accounts/create")
+    @GetMapping(value = "/accounts/create")
     public String createAccountPage(Authentication authentication, Model model) {
 
         String openDateString = "";
         String closeDateString = "";
 
         Account newAccount = new Account();
+        newAccount.setStatus(true);
+
+        String generatedNumber = SecurityController.generateAccountNumber(19);
+        while(accountRepository.findByNumber(generatedNumber).isPresent())
+            generatedNumber = SecurityController.generateAccountNumber(19);
+        newAccount.setNumber(generatedNumber);
+
+        newAccount.setAmount(BigDecimal.valueOf(0.0));
+
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -67,14 +77,16 @@ public class AccountController {
         model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("openDateString", openDateString);
         model.addAttribute("closeDateString", closeDateString);
-        model.addAttribute("newAccount", newAccount);
+        model.addAttribute("account", newAccount);
+        model.addAttribute("customers", customerRepository.findAll());
+
 
         return "account/create-page";
     }
 
     @PostMapping(value = "/accounts/create")
     public String createAccount(@ModelAttribute Account newAccount,
-                                 @RequestParam String openDateString, @RequestParam String closeDateString) throws ParseException {
+                                 @RequestParam String openDateString, @RequestParam String closeDateString, @RequestParam Long selectedCustomer) throws ParseException {
 
         newAccount.setOpenDate(converterStringToDate(openDateString));
         newAccount.setCloseDate(converterStringToDate(closeDateString));
@@ -92,6 +104,6 @@ public class AccountController {
     public String converterDateToString(Date dateValue) {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(dateValue);
-    }*/
+    }
 
 }

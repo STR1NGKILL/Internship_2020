@@ -1,8 +1,9 @@
-package gradle.tasks;
+package gradle.plugin;
 
-import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.TaskAction;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,7 +17,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class XmlReaderAndDbUploaderTask extends DefaultTask {
+public class XmlReaderAndDbUploaderActions {
+
+    String  driverName,
+            pathToDb,
+            login,
+            password;
+
+    public XmlReaderAndDbUploaderActions(String file, String driverName, String pathToDb, String login, String password) throws IOException, SAXException, ParserConfigurationException, SQLException {
+
+        this.driverName = driverName;
+        this.pathToDb = pathToDb;
+        this.login = login;
+        this.password = password;
+
+        ArrayList<String> queries = parseXml(this.getClass().getResourceAsStream(file));
+        sendQueryToDb(queries);
+    }
 
     private ArrayList<String> parseXml(InputStream file) throws ParserConfigurationException, IOException, SAXException {
 
@@ -47,10 +64,6 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
             }
 
         }
-
-
-
-
         return queries;
     }
 
@@ -59,8 +72,8 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
         Connection connection = null;
 
         try {
-            Class.forName ("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/EmployeeDb", "postgres", "4145");
+            Class.forName (driverName);
+            connection = DriverManager.getConnection(pathToDb, login, password);
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Connection fail!" + "\n\n");
             e.printStackTrace();
@@ -75,12 +88,5 @@ public class XmlReaderAndDbUploaderTask extends DefaultTask {
         System.out.println("Queries complete!");
 
     }
-
-    @TaskAction
-    public void run() throws IOException, SAXException, ParserConfigurationException, SQLException {
-        ArrayList<String> queries = parseXml(this.getClass().getResourceAsStream("/actions.xml"));
-        sendQueryToDb(queries);
-    }
-
 
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Открытие счёта</title>
+
+    <!--Basic-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+            <nav class="navbar navbar-expand-lg navbar-dark navbar-inverse shadow-sm border rounded-bottom bg-success" style="background: #00b300; width: 100rem">
+                <a class="navbar-brand" style="color: white" th:href="@{/main}"><i class="fas fa-university"></i> App For Employee</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto" style="width: 70rem">
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mr-auto" style="width: auto">
+                        <li class="nav-item text-light">
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}"></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
+                        <li class="nav-item d-flex">
+                            <a class="nav-link p-0 m-0" href="#" ></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="navigations-headers-01" href="#" role="button" data-toggle="dropdown" >
+                                <i class="fas fa-user-circle" style="font-size: 20pt;"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navigations-headers-01" style="margin-top: 0.5rem; margin-left: 1rem">
+                                <a class="dropdown-item" th:href="@{/profile/edit/}"><i class="far fa-address-card"></i>
+                                    Профиль
+                                </a>
+                                <a class="dropdown-item" th:href="@{/logout}">
+                                    <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
+                                        Завершить сеанс
+                                    </font>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
+            <a th:href="@{/accounts}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+        </div>
+
+        <div class="col-auto" style="width: 70rem" >
+
+            <div>
+                <br/>
+                <h5 class="display-4">Открытие счёта</h5>
+                <br/><br/>
+            </div>
+
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма создания счёта</h5></label>
+            <br/><br/>
+
+            <form th:action="@{/accounts/create}" th:method="POST" th:object="${account}" id="form">
+
+                <label for="number">Номер</label>
+                <input class="form-control rounded border input-group-lg" readonly id="number" th:field="*{number}" th:value="${account.number}" style="width: 300px"/>
+                <br/>
+                <label for="customer">ФИО владельца</label>
+                <select class="form-control" id="customer" th:name="selectedCustomer" style="width: 300px" >
+                    <option th:if="${customers.isEmpty()}"
+                            th:text="Empty">
+                    </option>
+
+                    <option th:each="customer : ${customers}"
+                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()}"
+                            th:value="${customer.id}">
+                    </option>
+                </select>
+
+                <br/>
+                <label for="openDate">Дата открытия</label>
+                <input class="form-control rounded border input-group-lg" required id="openDate" type="date" th:field="*{openDate}" style="width: 300px"/>
+                <br/>
+                <label for="closeDate">Дата закрытия</label>
+                <input class="form-control rounded border input-group-lg" required id="closeDate" type="date" th:field="*{closeDate}" style="width: 300px"/>
+                <br/>
+                <label for="status">Статус</label>
+                <div id="status">
+                    <a class="form-control rounded border input-group-lg" th:if="${account.status}" th:text="Открывается" style="width: 300px"></a>
+                </div>
+                <br/>
+                <label for="currency">Валюта</label>
+                <input class="form-control rounded border input-group-lg" required id="currency" type="text" th:field="*{currency}" style="width: 300px"/>
+                <br/>
+                <label for="amount">Сумма</label>
+                <input class="form-control rounded border input-group-lg" required readonly id="amount" type="number" th:field="*{amount}" style="width: 300px"/>
+                <br/>
+
+                <label for="card">Привязанная карта</label>
+                <div id="card">
+                    <a class="form-control rounded border input-group-lg" th:if="${account.card == null}" th:text="Пусто" style="width: 300px"></a>
+                    <a class="form-control rounded border input-group-lg" th:if="${account.card != null}" th:text="${account.card.number}" style="width: 300px"></a>
+                </div>
+                <br/>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Открыть счёт</button>&nbsp;
+                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 10rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
+                </div>
+
+            </form>
+            <br/>
+        </div>
+
+        <div class="col-auto" style="width: 4rem;"></div>
+        <div class="col"></div>
+
+    </div>
+</div>
+
+
+<!--Basic-->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+</body>
+</html>

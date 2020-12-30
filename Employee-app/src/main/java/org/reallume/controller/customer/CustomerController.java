@@ -44,6 +44,7 @@ public class CustomerController {
         model.addAttribute("loggedEmployee", employeeRepository.findByLogin(authentication.getName()).get());
         model.addAttribute("customers", customerRepository.findAll());
 
+
         return "customer/customers-page";
     }
 

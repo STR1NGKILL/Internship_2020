@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Currencies>
+    <Currency>
+        <Id>0</Id>
+        <Name>Рубль</Name>
+        <Sign>₽</Sign>
+        <Value>1</Value>
+    </Currency>
+    <Currency>
+        <Id>1</Id>
+        <Name>Евро</Name>
+        <Sign>€</Sign>
+        <Value>90.56</Value>
+    </Currency>
+    <Currency>
+        <Id>2</Id>
+        <Name>Доллар</Name>
+        <Sign>$</Sign>
+        <Value>73.72</Value>
+    </Currency>
+</Currencies>

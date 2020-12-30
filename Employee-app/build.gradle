@@ -1,4 +1,4 @@
-import gradle.tasks.XmlReaderAndDbUploaderTask
+import gradle.tasks.*
 
 plugins {
     id 'java'
@@ -18,7 +18,9 @@ repositories {
     mavenCentral()
 }
 
-task execute(type: XmlReaderAndDbUploaderTask)
+task RunReadingXmlWithActionsOfRights(type: RunReadingXmlWithActionsOfRights)
+task RunReadingXmlWithCurrencies(type: RunReadingXmlWithCurrencies)
+
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
