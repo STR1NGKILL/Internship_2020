@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование счёта</title>
+
+    <!--Basic-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+            <nav class="navbar navbar-expand-lg navbar-dark navbar-inverse shadow-sm border rounded-bottom bg-success" style="background: #00b300; width: 100rem">
+                <a class="navbar-brand" style="color: white" th:href="@{/main}"><i class="fas fa-university"></i> App For Employee</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto" style="width: auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
+                        <li class="nav-item text-light">
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}  + ' ' + ${loggedEmployee.patronymic}"></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
+                        <li class="nav-item d-flex">
+                            <a class="nav-link p-0 m-0" href="#" ></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="navigations-headers-01" href="#" role="button" data-toggle="dropdown" >
+                                <i class="fas fa-user-circle" style="font-size: 20pt;"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navigations-headers-01" style="margin-top: 0.5rem; margin-left: 1rem">
+                                <a class="dropdown-item" th:href="@{/profile/edit/}"><i class="far fa-address-card"></i>
+                                    Профиль
+                                </a>
+                                <a class="dropdown-item" th:href="@{/logout}">
+                                    <font color="red"><i class="fas fa-sign-out-alt" style="color: red"></i>
+                                        Завершить сеанс
+                                    </font>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
+            <a th:href="@{/accounts}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+        </div>
+
+        <div class="col-auto" style="width: 70rem" >
+
+            <div>
+                <br/>
+                <h5 class="display-4">Редактирования счёта</h5>
+                <br/><br/>
+            </div>
+
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования счёта</h5></label>
+            <br/><br/>
+
+            <form th:action="@{/accounts/{account_id}/edit(account_id=${account.id})}" th:method="POST" th:object="${account}" id="form">
+
+                <label for="number">Номер</label>
+                <input class="form-control rounded border input-group-lg" readonly id="number" th:field="*{number}" th:value="${account.number}" style="width: 300px"/>
+                <br/>
+                <label for="customer">ФИО владельца</label>
+                <select class="form-control" id="customer" th:name="selectedCustomer" style="width: 300px" >
+                    <option th:if="${customers.isEmpty()}"
+                            th:text="Пусто">
+                    </option>
+
+                    <option th:each="customer : ${customers}"
+                            th:if="${customer.id == account.customer.id}" selected
+                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()}"
+                            th:value="${customer.id}">
+                    </option>
+
+                    <option th:each="customer : ${customers}"
+                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()}"
+                            th:value="${customer.id}">
+                    </option>
+                </select>
+                <br/>
+                <label for="openDate">Дата открытия</label>
+                <input class="form-control rounded border input-group-lg" required id="openDate" type="date" th:name="openDateString" th:value="${openDateString}" th:min="${openDateString}" th:max="${closeDateString}" style="width: 300px"/>
+                <br/>
+                <label for="closeDate">Дата закрытия</label>
+                <input class="form-control rounded border input-group-lg" required id="closeDate" type="date" th:name="closeDateString" th:value="${closeDateString}" th:min="${openDateString}" style="width: 300px"/>
+                <br/>
+                <label for="status">Статус</label>
+                <div id="status">
+                    <a class="form-control rounded border input-group-lg" th:if="${account.status}" th:text="Открыт" style="width: 300px"></a>
+                    <a class="form-control rounded border input-group-lg" th:if="${!account.status}" th:text="Закрыт" style="width: 300px"></a>
+                </div>
+                <br/>
+                <label for="currency">Валюта</label>
+                <select class="form-control" id="currency" th:name="selectedCurrency" style="width: 300px" >
+                    <option th:if="${currencies.isEmpty()}"
+                            th:text="Empty">
+                    </option>
+
+                    <option th:each="currency : ${currencies}"
+                            th:if="${currency.id == account.currency.id}" selected
+                            th:text="${currency.name} + ' (' + ${currency.sign} + ')'"
+                            th:value="${currency.id}">
+                    </option>
+
+                    <option th:each="currency : ${currencies}"
+                            th:text="${currency.name} + ' (' + ${currency.sign} + ')'"
+                            th:value="${currency.id}">
+                    </option>
+                </select>
+                <br/>
+                <label for="amount">Сумма</label>
+                <input class="form-control rounded border input-group-lg" required readonly id="amount" type="number" th:field="*{amount}" style="width: 300px"/>
+                <br/>
+
+                <label for="card">Привязанная карта</label>
+                <div id="card">
+                    <a class="form-control rounded border input-group-lg" th:if="${account.card == null}" th:text="Пусто" style="width: 300px"></a>
+                    <a class="form-control rounded border input-group-lg" th:if="${account.card != null}" th:text="${account.card.number}" style="width: 300px"></a>
+                </div>
+                <br/>
+                <div class="currentAccount_action" style="text-align: right;">
+                    <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
+                    <a th:if="${account.status == true}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="closeAccountBtn btn btn-danger btn-bg" style="width: 10rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Закрыть счёт</a>
+                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="openAccountBtn btn btn-success btn-bg" style="width: 12rem; color: white;"><i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Переоткрыть счёт</a>
+                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/delete(account_id=${account.id})}" type="button" class="deleteAccountBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить счёт</a>
+                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 10rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
+                </div>
+
+            </form>
+            <br/>
+        </div>
+
+        <div class="col-auto" style="width: 4rem;"></div>
+        <div class="col"></div>
+
+    </div>
+</div>
+
+
+<!-- Modal popup - close current account-->
+<div class="closeAccountForm">
+    <div class="modal fade" id="closeAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="text-align: right;margin-right: 20px;"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="closeAccountModalLabel">Закрытие счёта</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger" >
+                        Вы действительно хотите закрыть текущий счёт?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <a href="" class="btn btn-danger" id="closeRef">Закрыть счёт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal popup - reopen current account-->
+<div class="openAccountForm">
+    <div class="modal fade" id="openAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="text-align: right;margin-right: 20px;"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="openAccountModalLabel">Открытие счёта</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger" >
+                        Вы действительно хотите открыть текущий счёт снова?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <a href="" class="btn btn-success" id="openRef">Открыть счёт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal popup - delete current account-->
+<div class="deleteAccountForm">
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="text-align: right;margin-right: 20px;"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAccountModalLabel">Удаление счёта</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger" >
+                        Вы действительно хотите удалить текущий счёт?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <a href="" class="btn btn-danger" id="deleteRef">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Basic-->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+<!--modal popup script to close current account-->
+<script>
+    $(document).ready(function () {
+        $('.currentAccount_action .closeAccountBtn ').on('click', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#closeAccountModal #closeRef').attr('href', href);
+            $('#closeAccountModal').modal();
+        })
+    });
+</script>
+
+<!--modal popup script to reopen current account-->
+<script>
+    $(document).ready(function () {
+        $('.currentAccount_action .openAccountBtn ').on('click', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#openAccountModal #openRef').attr('href', href);
+            $('#openAccountModal').modal();
+        })
+    });
+</script>
+
+<!--modal popup script to reopen current account-->
+<script>
+    $(document).ready(function () {
+        $('.currentAccount_action .deleteAccountBtn ').on('click', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#deleteAccountModal #deleteRef').attr('href', href);
+            $('#deleteAccountModal').modal();
+        })
+    });
+</script>
+
+</body>
+</html>

@@ -29,7 +29,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto" style="width: 70rem">
+                    <ul class="navbar-nav mr-auto" style="width: auto">
                         <li class="nav-item">
                             <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
                         </li>
@@ -43,9 +43,9 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mr-auto" style="width: auto">
+                    <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
-                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}"></a>
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}   + ' ' + ${loggedEmployee.patronymic}"></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav order-1 order-lg-2" style="width: auto">

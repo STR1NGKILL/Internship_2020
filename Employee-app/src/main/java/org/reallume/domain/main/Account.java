@@ -1,13 +1,13 @@
 package org.reallume.domain.main;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -37,19 +37,19 @@ public class Account {
     private Date closeDate;
 
     @NotNull
-    private boolean status;
+    private Boolean status;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="card_id")
     private Card card;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="currency_id")
     private Currency currency;
 

@@ -33,10 +33,10 @@ public class Account {
     private Date closeDate;
 
     @NotNull
-    private boolean status;
+    private Boolean status;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Customer customer;
 
@@ -52,7 +52,7 @@ public class Account {
     @NotNull
     private BigDecimal amount;
 
-    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, boolean accountStatus, BigDecimal amount) {
+    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, Boolean accountStatus, BigDecimal amount) {
         this.number = number;
         this.currency = currency;
         this.currencyQuantity = currencyQuantity;

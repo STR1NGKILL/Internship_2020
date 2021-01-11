@@ -29,7 +29,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto" style="width: 70rem">
+                    <ul class="navbar-nav mr-auto" style="width: auto">
                         <li class="nav-item">
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
                         </li>
@@ -43,9 +43,9 @@
                             <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mr-auto" style="width: auto">
+                    <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
-                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}"></a>
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}   + ' ' + ${loggedEmployee.patronymic}"></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
@@ -108,6 +108,7 @@
                     <th class="align-middle">ФИО клиента</th>
                     <th class="align-middle">Дата открытия</th>
                     <th class="align-middle">Дата закрытия</th>
+                    <th class="align-middle">Статус</th>
                     <th class="align-middle">Действия</th>
                 </tr>
                 </thead>
@@ -117,8 +118,10 @@
                     <td th:utext="${state.index}" style="width: 4rem">...</td>
                     <td th:utext="${account.number}">...</td>
                     <td th:utext="${account.customer.secondName} + ' ' + ${account.customer.firstName} + ' ' + ${account.customer.patronymic}">...</td>
-                    <td th:utext="${account.openDate}">...</td>
-                    <td th:utext="${account.closeDate}">...</td>
+                    <td th:utext="${dateFormat.format(account.openDate)}">...</td>
+                    <td th:utext="${dateFormat.format(account.closeDate)}">...</td>
+                    <td th:if="${account.status} == true" th:utext="Открыт">...</td>
+                    <td th:if="${account.status} == false" th:utext="Закрыт">...</td>
                     <td class="accounts" style="text-align: center; width: 5rem;">
                         <a th:href="@{/accounts/{account_id}/edit/(account_id=${account.id})}" style="color: green;" type="button"
                         ><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;

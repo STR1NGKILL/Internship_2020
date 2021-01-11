@@ -26,7 +26,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto" style="width: 70rem">
+                    <ul class="navbar-nav mr-auto" style="width: auto">
                         <li class="nav-item">
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
                         </li>
@@ -40,9 +40,9 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mr-auto" style="width: auto">
+                    <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
-                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}"></a>
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}   + ' ' + ${loggedEmployee.patronymic}"></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
@@ -93,41 +93,24 @@
             <form th:action="@{/profile/edit}" th:method="POST" th:object="${loggedEmployee}" id="form">
 
                 <label for="firstName">Имя</label>
-                <input class="form-control rounded border input-group-lg" required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
+                <input class="form-control rounded border input-group-lg" readonly required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
                 <br/>
                 <label for="secondName">Фамилия</label>
-                <input class="form-control rounded border input-group-lg" required id="secondName" type="text" th:field="*{secondName}" placeholder="Введите фамилию" style="width: 250px"/>
+                <input class="form-control rounded border input-group-lg" readonly required id="secondName" type="text" th:field="*{secondName}" placeholder="Введите фамилию" style="width: 250px"/>
                 <br/>
                 <label for="patronymic">Отчество</label>
-                <input class="form-control rounded border input-group-lg" required id="patronymic" type="text" th:field="*{patronymic}" placeholder="Введите отчество" style="width: 250px"/>
+                <input class="form-control rounded border input-group-lg" readonly required id="patronymic" type="text" th:field="*{patronymic}" placeholder="Введите отчество" style="width: 250px"/>
                 <br/>
                 <label for="login">Логин</label>
-                <input class="form-control rounded border input-group-lg" required id="login" type="text" th:field="*{login}" placeholder="Введите логин" style="width: 250px"/>
+                <input class="form-control rounded border input-group-lg" readonly required id="login" type="text" th:field="*{login}" placeholder="Введите логин" style="width: 250px"/>
                 <br/>
                 <label for="password">Пароль</label>
                 <input class="form-control rounded border input-group-lg" required id="password" type="password" th:field="*{password}" placeholder="Введите пароль" style="width: 250px"/>
                 <br/>
                 <input required  type="hidden" th:field="*{salt}"/>
                 <label for="rights">Схема прав</label>
-                <select class="form-control" id="rights" th:name="selectedRights" style="width: 250px" th:if="${authorities.contains('create_edit_delete_rights')}">
-                    <option th:if="${allRights.isEmpty()}"
-                            th:text="Пусто">
-                    </option>
-
-                    <option th:each="rights : ${allRights}"
-                            th:if="${rights.id == loggedEmployee.rights.id}" selected
-                            th:text="${rights.getName()}"
-                            th:value="${rights.id}">
-                    </option>
-
-                    <option th:each="rights : ${allRights}"
-                            th:if="${rights.id != loggedEmployee.rights.id}"
-                            th:text="${rights.getName()}"
-                            th:value="${rights.id}">
-                    </option>
-                </select>
-                <input hidden th:if="${!authorities.contains('create_edit_delete_rights')}" class="form-control rounded border input-group-lg" th:name="selectedRights" th:value="${loggedEmployee.rights.id}" />
-                <a th:if="${!authorities.contains('create_edit_delete_rights')}" class="form-control rounded border input-group-lg" th:text="${loggedEmployee.rights.getName()}" style="width: 250px"></a>
+                <input hidden class="form-control rounded border input-group-lg" id="rights" th:name="selectedRights" th:value="${loggedEmployee.rights.id}" />
+                <a class="form-control rounded border input-group-lg" readonly th:text="${loggedEmployee.rights.getName()}" style="width: 250px"></a>
                 <br/>
                 <label for="activity">Состояние аккаунта</label>
                 <div id="activity">
@@ -139,7 +122,6 @@
                 <div class="currentEmployee_action" style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
-                    <a th:href="@{/profile/delete/}" th:if="${authorities.contains('create_edit_delete_employee')}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить профиль</a>
                 </div>
             </form>
 
@@ -154,49 +136,11 @@
 </div>
 
 
-<!-- Modal popup - delete the current employee-->
-<div class="deleteEmployeeForm" th:if="${authorities.contains('create_edit_delete_employee')}">
-    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div style="text-align: right;margin-right: 20px;"></div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteEmployeeModalLabel">Удаление профиля сотрудника</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="alert alert-danger" >
-                        Вы действительно хотите удалить свой профиль?
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a href="" class="btn btn-danger" id="delRef">Удалить</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!--Basic-->
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-<!--modal popup script to delete current employee-->
-<script>
-    $(document).ready(function () {
-        $('.currentEmployee_action .deleteEmployeeBtn ').on('click', function (event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#deleteEmployeeModal #delRef').attr('href', href);
-            $('#deleteEmployeeModal').modal();
-        })
-    });
-</script>
 
 </body>
 </html>

@@ -34,7 +34,7 @@ public class Card {
     private boolean status;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Customer customer;
 
