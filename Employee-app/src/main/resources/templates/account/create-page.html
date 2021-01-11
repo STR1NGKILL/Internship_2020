@@ -102,7 +102,7 @@
                     </option>
 
                     <option th:each="customer : ${customers}"
-                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()}"
+                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()} + ' (' + ${customer.getLogin()} + ')'"
                             th:value="${customer.id}">
                     </option>
                 </select>

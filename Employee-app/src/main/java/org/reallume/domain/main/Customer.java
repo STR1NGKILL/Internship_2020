@@ -46,10 +46,10 @@ public class Customer {
     @NotNull
     private String salt;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Card> cards;
 
     public Customer(String firstName, String secondName, String patronymic, byte[] document, Date birthday, String login, String password, String salt) {

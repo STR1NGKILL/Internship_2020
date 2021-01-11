@@ -104,6 +104,9 @@ public class CustomerController {
         model.addAttribute("birthdayStringValue", converterDateToString(customerRepository.findById(customer_id).get().getBirthday()));
         model.addAttribute("currentCustomer", customerRepository.findById(customer_id).get());
 
+        SimpleDateFormat dateFormat= new SimpleDateFormat("dd.MM.yyyy");
+        model.addAttribute("dateFormat", dateFormat);
+
         return "customer/edit-page";
     }
 

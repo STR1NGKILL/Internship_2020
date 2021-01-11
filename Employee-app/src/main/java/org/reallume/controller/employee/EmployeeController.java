@@ -120,6 +120,7 @@ public class EmployeeController {
                                @RequestParam Long selectedRights) {
 
         Employee employeeToEdit = employeeRepository.findById(employee_id).get();
+
         employeeToEdit.setFirstName(currentEmployee.getFirstName());
         employeeToEdit.setSecondName(currentEmployee.getSecondName());
         employeeToEdit.setPatronymic(currentEmployee.getPatronymic());

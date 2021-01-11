@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование счёта</title>
+    <title>Данные счёта</title>
 
     <!--Basic-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -83,7 +83,7 @@
 
             <div>
                 <br/>
-                <h5 class="display-4">Редактирования счёта</h5>
+                <h5 class="display-4">Данные счёта</h5>
                 <br/><br/>
             </div>
 
@@ -103,12 +103,12 @@
 
                     <option th:each="customer : ${customers}"
                             th:if="${customer.id == account.customer.id}" selected
-                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()}"
+                            th:text="${customer.getSecondName() + ' ' + customer.getFirstName() + ' ' + customer.getPatronymic() + ' (' + customer.getLogin() + ')'}"
                             th:value="${customer.id}">
                     </option>
 
                     <option th:each="customer : ${customers}"
-                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()}"
+                            th:text="${customer.getSecondName() + ' ' + customer.getFirstName() + ' ' + customer.getPatronymic() + ' (' + customer.getLogin() + ')'}"
                             th:value="${customer.id}">
                     </option>
                 </select>
@@ -155,9 +155,9 @@
                 <br/>
                 <div class="currentAccount_action" style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
-                    <a th:if="${account.status == true}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="closeAccountBtn btn btn-danger btn-bg" style="width: 10rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Закрыть счёт</a>
-                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="openAccountBtn btn btn-success btn-bg" style="width: 12rem; color: white;"><i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Переоткрыть счёт</a>
-                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/delete(account_id=${account.id})}" type="button" class="deleteAccountBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить счёт</a>
+                    <a th:if="${account.status == true}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="closeAccountBtn btn btn-danger btn-bg" style="width: 10rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Закрыть счёт</a>&nbsp;
+                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="openAccountBtn btn btn-success btn-bg" style="width: 12rem; color: white;"><i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Переоткрыть счёт</a>&nbsp;
+                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/delete(account_id=${account.id})}" type="button" class="deleteAccountBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить счёт</a>&nbsp;
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 10rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
                 </div>
 

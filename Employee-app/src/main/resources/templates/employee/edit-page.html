@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование данных сотрудника</title>
+    <title>Данные сотрудника</title>
 
     <!--Basic-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -83,11 +83,11 @@
 
             <div>
                 <br/>
-                <h5 class="display-4">Редактирование данных сотрудника</h5>
+                <h5 class="display-4">Данные сотрудника</h5>
                 <br/><br/>
             </div>
 
-            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования</h5></label>
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования сотрудника</h5></label>
             <br/><br/>
 
             <form th:action="@{/employees/{employee_id}/edit/(employee_id=${currentEmployee.id})}" th:method="POST" th:object="${currentEmployee}" id="form">
@@ -137,11 +137,11 @@
                 <br/>
 
                 <div class="currentEmployee_action" style="text-align: right;">
-                    <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>
-                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
-                    <a th:href="@{/employees/{employee_id}/delete/(employee_id=${currentEmployee.id})}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить сотрудника</a>
-                    <a th:if="${currentEmployee.getActivity().equals(true)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="blockEmployeeBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-ban"></i>&nbsp;&nbsp;Заблокировать</a>
-                    <a th:if="${currentEmployee.getActivity().equals(false)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="unblockEmployeeBtn btn btn-warning btn-bg" style="width: 12rem; color: white;"><i class="fas fa-unlock"></i>&nbsp;&nbsp;Разблокировать</a>
+                    <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
+                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>&nbsp;
+                    <a th:href="@{/employees/{employee_id}/delete/(employee_id=${currentEmployee.id})}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить сотрудника</a>&nbsp;
+                    <a th:if="${currentEmployee.getActivity().equals(true)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="blockEmployeeBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-ban"></i>&nbsp;&nbsp;Заблокировать</a>&nbsp;
+                    <a th:if="${currentEmployee.getActivity().equals(false)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="unblockEmployeeBtn btn btn-warning btn-bg" style="width: 12rem; color: white;"><i class="fas fa-unlock"></i>&nbsp;&nbsp;Разблокировать</a>&nbsp;
                 </div>
             </form>
 
