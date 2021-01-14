@@ -31,23 +31,36 @@ public class Card {
     private Date closeDate;
 
     @NotNull
-    private boolean status;
+    @Column(name = "active_status")
+    private Boolean activeStatus;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "block_status")
+    private Boolean blockStatus;
+
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="account_id")
+    @OneToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
-    public Card(String number, Date openDate, Date closeDate, boolean status) {
+    public Card(String number, Date openDate, Date closeDate, Boolean activeStatus, Boolean blockStatus) {
         this.number = number;
         this.openDate = openDate;
         this.closeDate = closeDate;
-        this.status = status;
+        this.activeStatus = activeStatus;
+        this.blockStatus = blockStatus;
+    }
+
+    public Card(String number, Date openDate, Date closeDate) {
+        this.number = number;
+        this.openDate = openDate;
+        this.closeDate = closeDate;
+        this.activeStatus = true;
+        this.blockStatus = false;
     }
 
 }

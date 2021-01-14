@@ -1,9 +1,8 @@
 package org.reallume.domain.main;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -40,11 +39,11 @@ public class Account {
     private Boolean status;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="card_id")
     private Card card;
 

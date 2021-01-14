@@ -48,7 +48,7 @@ public class SecurityController extends HttpServlet {
         return passwordEncoder.encode(password + salt);
     }
 
-    public static String generateAccountNumber(Integer length){
+    public static String generateNumber(Integer length){
 
         StringBuilder accountNumber = new StringBuilder();
         Random random = new Random();

@@ -1,13 +1,11 @@
 package org.reallume.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Calendar;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -42,10 +40,10 @@ public class Customer {
     @NotNull
     private String salt;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer")
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer")
     private List<Card> cards;
 
     public Customer(String firstName, String secondName, String patronymic, byte[] document, Date birthday, String login, String password, String salt) {

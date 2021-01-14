@@ -24,35 +24,38 @@ public class Account {
     private String number;
 
     @NotNull
+    @Column(name = "currency_quantity")
     private long currencyQuantity;
 
     @NotNull
+    @Column(name = "open_date")
     private Date openDate;
 
     @NotNull
+    @Column(name = "close_date")
     private Date closeDate;
 
     @NotNull
     private Boolean status;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="card_id")
     private Card card;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="currency_id")
     private Currency currency;
 
     @NotNull
     private BigDecimal amount;
 
-    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, Boolean accountStatus, BigDecimal amount) {
+    public Account(String number, Currency currency, long currencyQuantity, Date accountOpenDate, Date accountCloseDate, boolean accountStatus, BigDecimal amount) {
         this.number = number;
         this.currency = currency;
         this.currencyQuantity = currencyQuantity;

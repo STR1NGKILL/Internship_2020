@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Сотрудники</title>
+    <title>Карты</title>
 
 
     <!--Basic-->
@@ -34,7 +34,7 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_customer')}" th:href="@{/customers}">Клиенты</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_employee')}" th:href="@{/employees}">Сотрудники</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
@@ -43,12 +43,12 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
-                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}  + ' ' + ${loggedEmployee.patronymic}"></a>
+                            <a th:text="${loggedEmployee.secondName} + ' ' + ${loggedEmployee.firstName}   + ' ' + ${loggedEmployee.patronymic}"></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav order-1 order-lg-2" style="width: auto">
@@ -89,43 +89,45 @@
 
             <div>
                 <br/>
-                <h5 class="display-4">Сотрудники</h5>
+                <h5 class="display-4">Карты</h5>
                 <br/><br/>
             </div>
 
             <div class="text-right createRights" >
-                <a th:href="@{/employees/create}" type="button" class="btn btn-success btn-sm createRightsBtn" style="width: 10rem; color: white;">
-                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Новый сотрудник
+                <a th:href="@{/cards/create}" type="button" class="btn btn-success btn-sm createRightsBtn" style="width: 10rem; color: white;">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Новая карта
                 </a>
             </div>
 
             <div>
-                <h5 class="display-4" style="font-size: 20pt">Список сотрудников</h5>
+                <h5 class="display-4" style="font-size: 20pt">Список карт</h5>
             </div>
 
             <table class="table table-hover table-bordered" id="actions_table" style="width:100%;">
                 <thead>
                 <tr class="table" style="background: #00b300; color: white">
                     <th class="align-middle">№</th>
-                    <th class="align-middle">Имя</th>
-                    <th class="align-middle">Фамилия</th>
-                    <th class="align-middle">Отчество</th>
-                    <th class="align-middle">Логин</th>
-                    <th class="align-middle">Права</th>
+                    <th class="align-middle">Номер карты</th>
+                    <th class="align-middle">ФИО клиента</th>
+                    <th class="align-middle">Дата открытия</th>
+                    <th class="align-middle">Дата закрытия</th>
+                    <th class="align-middle">Статус</th>
                     <th class="align-middle">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${employees != null || !employees.isEmpty()}"
-                    th:each="employee, state : ${employees}">
+                <tr th:if="${cards != null || !cards.isEmpty()}"
+                    th:each="card, state : ${cards}">
                     <td th:utext="${state.index}" style="width: 4rem">...</td>
-                    <td th:utext="${employee.firstName}">...</td>
-                    <td th:utext="${employee.secondName}">...</td>
-                    <td th:utext="${employee.patronymic}">...</td>
-                    <td th:utext="${employee.login}">...</td>
-                    <td th:utext="${employee.rights.name}">...</td>
-                    <td class="rights" style="text-align: center; width: 5rem;">
-                        <a th:href="@{/employees/{employee_id}/edit/(employee_id=${employee.id})}" style="color: green;" type="button"
+                    <td th:utext="${card.number}">...</td>
+                    <td th:utext="${card.customer.secondName} + ' ' + ${card.customer.firstName} + ' ' + ${card.customer.patronymic}">...</td>
+                    <td th:utext="${dateFormat.format(card.openDate)}">...</td>
+                    <td th:utext="${dateFormat.format(card.closeDate)}">...</td>
+                    <td th:if="${card.activeStatus == true}" th:utext="Открыта">...</td>
+                    <td th:if="${card.activeStatus == false && card.blockStatus == false}" th:utext="Закрыта">...</td>
+                    <td th:if="${card.activeStatus == false && card.blockStatus == true}" th:utext="Заблокирована">...</td>
+                    <td class="cards" style="text-align: center; width: 5rem;">
+                        <a th:href="@{/cards/{card_id}/edit/(card_id=${card.id})}" style="color: green;" type="button"
                         ><i class="fas fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
                     </td>
                 </tr>
@@ -162,14 +164,14 @@
             "searchable": true, "targets": 0,
             "language": {
                 "processing": "Подождите...",
-                "search": "Поиск cотрудников:",
+                "search": "Поиск карт:",
                 "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
                 "infoEmpty": "Записи с 0 до 0 (из 0 записей)",
                 "infoFiltered": "(отфильтровано из _MAX_ записей)",
                 "infoPostFix": "",
                 "loadingRecords": "Загрузка записей...",
                 "zeroRecords": "Записи отсутствуют.",
-                "emptyTable": "Список сотрудников пуст",
+                "emptyTable": "Список карт пуст",
                 "paginate": {
                     "first": "Первая",
                     "previous": "Предыдущая",

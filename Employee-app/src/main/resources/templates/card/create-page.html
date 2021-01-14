@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Открытие счёта</title>
+    <title>Открытие карты</title>
 
     <!--Basic-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -37,10 +37,10 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}">Права</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
@@ -79,73 +79,68 @@
         <div class="col"></div>
 
         <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
-            <a th:href="@{/accounts}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+            <a th:href="@{/cards}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-auto" style="width: 70rem" >
 
             <div>
                 <br/>
-                <h5 class="display-4">Открытие счёта</h5>
+                <h5 class="display-4">Открытие карты</h5>
                 <br/><br/>
             </div>
 
-            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма создания счёта</h5></label>
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма создания карты</h5></label>
             <br/><br/>
 
-            <form th:action="@{/accounts/create}" th:method="POST" th:object="${account}" id="form">
+            <form th:action="@{/cards/create}" th:method="POST" th:object="${card}" id="form">
 
                 <label for="number">Номер</label>
-                <input class="form-control rounded border input-group-lg" readonly id="number" th:field="*{number}" th:value="${account.number}" style="width: 300px"/>
-                <br/>
-                <label for="customer">Клиент</label>
-                <select class="form-control" id="customer" th:name="selectedCustomer" style="width: 300px" >
-                    <option th:if="${customers.isEmpty()}"
-                            th:text="Empty">
-                    </option>
-
-                    <option th:each="customer : ${customers}"
-                            th:text="${customer.getSecondName()} + ' ' + ${customer.getFirstName()} + ' ' + ${customer.getPatronymic()} + ' (' + ${customer.getLogin()} + ')'"
-                            th:value="${customer.id}">
-                    </option>
-                </select>
-
+                <input class="form-control rounded border input-group-lg" readonly id="number" th:field="*{number}" th:value="${card.number}" style="width: 300px"/>
                 <br/>
                 <label for="openDate">Дата открытия</label>
                 <input class="form-control rounded border input-group-lg" readonly required id="openDate" type="date" th:name="openDateString" th:value="${openDateString}" th:min="${openDateString}" style="width: 300px"/>
                 <br/>
                 <label for="closeDate">Дата закрытия</label>
-                <input class="form-control rounded border input-group-lg" required id="closeDate" type="date" th:name="closeDateString" style="width: 300px"/>
+                <input class="form-control rounded border input-group-lg" readonly required id="closeDate" type="date" th:name="closeDateString" th:value="${closeDateString}" style="width: 300px"/>
                 <br/>
-                <label for="status">Статус</label>
-                <div id="status">
-                    <a class="form-control rounded border input-group-lg" th:if="${account.status}" th:text="Открывается" style="width: 300px"></a>
+                <label for="active_status">Статус активности</label>
+                <div id="active_status">
+                    <a class="form-control rounded border input-group-lg" th:if="${card.activeStatus}" th:text="Открывается" style="width: 300px"></a>
                 </div>
                 <br/>
-                <label for="currency">Валюта</label>
-                <select class="form-control" id="currency" th:name="selectedCurrency" style="width: 300px" >
-                    <option th:if="${currencies.isEmpty()}"
-                            th:text="Empty">
+                <label for="block_status">Статус блокировки</label>
+                <div id="block_status">
+                    <a class="form-control rounded border input-group-lg" th:if="${!card.blockStatus}" th:text="'Не' + ' ' + 'заблокирована'" style="width: 300px"></a>
+                </div>
+                <br/>
+
+                <label for="account">Привязанный счёт</label>
+                <select class="form-control" id="account" th:name="selectedAccount" style="width: 300px" >
+                    <option th:if="${accounts.isEmpty()}"
+                            th:text="Empty"
+                            th:value="${null}">
                     </option>
 
-                    <option th:each="currency : ${currencies}"
-                            th:text="${currency.name} + ' (' + ${currency.sign} + ')'"
-                            th:value="${currency.id}">
+                    <option th:each="account : ${accounts}"
+                            th:text="${account.number + ' (' + account.customer.secondName + ' ' + account.customer.firstName + ' ' + account.customer.patronymic + ')'}"
+                            th:value="${account.id}">
                     </option>
+
                 </select>
                 <br/>
-                <label for="amount">Сумма</label>
-                <input class="form-control rounded border input-group-lg" required readonly id="amount" type="number" th:field="*{amount}" style="width: 300px"/>
-                <br/>
-
-                <label for="card">Привязанная карта</label>
-                <div id="card">
-                    <a class="form-control rounded border input-group-lg" th:if="${account.card == null}" th:text="Пусто" style="width: 300px"></a>
-                    <a class="form-control rounded border input-group-lg" th:if="${account.card != null}" th:text="${account.card.number}" style="width: 300px"></a>
+                <div th:if="${accounts.isEmpty()}" class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
+                    <strong>Обратите внимание!</strong>
+                    <span>
+                        <span>Список доступных счетов пуст. Открытие карты невозможно.</span>
+                    </span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-                <br/>
+                <br/><br/>
                 <div style="text-align: right;">
-                    <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Открыть счёт</button>&nbsp;
+                    <button th:if="${!accounts.isEmpty()}" type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Открыть карту</button>&nbsp;
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 10rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
                 </div>
 

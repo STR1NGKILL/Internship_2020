@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
@@ -149,15 +152,16 @@
 
                 <label for="card">Привязанная карта</label>
                 <div id="card">
-                    <a class="form-control rounded border input-group-lg" th:if="${account.card == null}" th:text="Пусто" style="width: 300px"></a>
-                    <a class="form-control rounded border input-group-lg" th:if="${account.card != null}" th:text="${account.card.number}" style="width: 300px"></a>
+                    <a class="form-control rounded border input-group-lg" th:if="${account.card == null}" th:text="Пусто" style="width: 300px; display:inline-block "></a>
+                    <a class="form-control rounded border input-group-lg" th:if="${account.card != null}" th:text="${account.card.number}" style="width: 300px; display:inline-block"></a>
+                    <a type="button" class="btn btn-secondary btn-sm" th:if="${account.card != null  && authorities.contains('create_edit_delete_card')}" th:href="@{/cards/{card_id}/edit(card_id=${account.card.id})}" th:text="Перейти" style="width: 6rem; margin-left: 1rem; display:inline-block"></a>
                 </div>
                 <br/>
                 <div class="currentAccount_action" style="text-align: right;">
-                    <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
-                    <a th:if="${account.status == true}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="closeAccountBtn btn btn-danger btn-bg" style="width: 10rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Закрыть счёт</a>&nbsp;
-                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="openAccountBtn btn btn-success btn-bg" style="width: 12rem; color: white;"><i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Переоткрыть счёт</a>&nbsp;
-                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/delete(account_id=${account.id})}" type="button" class="deleteAccountBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить счёт</a>&nbsp;
+                    <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>
+                    <a th:if="${account.status == true}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="closeAccountBtn btn btn-danger btn-bg" style="width: 10rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Закрыть счёт</a>
+                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/change_status(account_id=${account.id})}" type="button" class="openAccountBtn btn btn-success btn-bg" style="width: 12rem; color: white;"><i class="fas fa-file-invoice-dollar"></i>&nbsp;&nbsp;Переоткрыть счёт</a>
+                    <a th:if="${account.status == false}" th:href="@{/accounts/{account_id}/delete(account_id=${account.id})}" type="button" class="deleteAccountBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить счёт</a>
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 10rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
                 </div>
 
@@ -240,10 +244,18 @@
                     <p class="alert alert-danger" >
                         Вы действительно хотите удалить текущий счёт?
                     </p>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
+                        <strong>Обратите внимание!</strong>
+                        <span th:if="${account.card != null}">К счёту привязана карта. Удаление счёта невозможно. Необходимо отвязать карту перед удалением счёта.</span>
+                        <span th:if="${account.card == null}">К счёту не привязана карта. Удаление счёта возможно.</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a href="" class="btn btn-danger" id="deleteRef">Удалить</a>
+                    <a href="" th:if="${account.card == null}" class="btn btn-danger" id="deleteRef">Удалить</a>
                 </div>
             </div>
         </div>
@@ -280,7 +292,7 @@
     });
 </script>
 
-<!--modal popup script to reopen current account-->
+<!--modal popup script to delete current account-->
 <script>
     $(document).ready(function () {
         $('.currentAccount_action .deleteAccountBtn ').on('click', function (event) {

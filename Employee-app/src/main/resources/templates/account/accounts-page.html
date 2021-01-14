@@ -42,6 +42,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
@@ -108,6 +111,7 @@
                     <th class="align-middle">ФИО клиента</th>
                     <th class="align-middle">Дата открытия</th>
                     <th class="align-middle">Дата закрытия</th>
+                    <th class="align-middle">Карта</th>
                     <th class="align-middle">Статус</th>
                     <th class="align-middle">Действия</th>
                 </tr>
@@ -120,6 +124,8 @@
                     <td th:utext="${account.customer.secondName} + ' ' + ${account.customer.firstName} + ' ' + ${account.customer.patronymic}">...</td>
                     <td th:utext="${dateFormat.format(account.openDate)}">...</td>
                     <td th:utext="${dateFormat.format(account.closeDate)}">...</td>
+                    <td th:if="${account.card != null}" th:utext="Есть">...</td>
+                    <td th:if="${account.card == null}" th:utext="Нет">...</td>
                     <td th:if="${account.status} == true" th:utext="Открыт">...</td>
                     <td th:if="${account.status} == false" th:utext="Закрыт">...</td>
                     <td class="accounts" style="text-align: center; width: 5rem;">

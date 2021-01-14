@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}">Счета</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
@@ -186,10 +189,22 @@
                     <p class="alert alert-danger" >
                         Вы действительно хотите удалить данного клиента?
                     </p>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
+                        <strong>Обратите внимание!</strong>
+                        <span>
+                            <span th:if="${!currentCustomer.accounts.isEmpty()}">Данная клиент имеет счет(а).</span>
+                            <span th:if="${!currentCustomer.cards.isEmpty()}">Данная клиент имеет карту(ы).</span>
+                            <span th:if="${!currentCustomer.cards.isEmpty() || !currentCustomer.accounts.isEmpty()}">Удаление клиента невозможно.</span>
+                            <span th:if="${currentCustomer.cards.isEmpty() && currentCustomer.accounts.isEmpty()}">Данный клиент не имеет счетов и карт. Удаление клиента возможно.</span>
+                        </span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <a href="" class="btn btn-danger" id="delRef">Удалить</a>
+                    <a th:if="${currentCustomer.cards.isEmpty() && currentCustomer.accounts.isEmpty()}" href="" class="btn btn-danger" id="delRef">Удалить</a>
                 </div>
             </div>
         </div>

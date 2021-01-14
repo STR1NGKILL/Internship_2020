@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +54,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "/accounts/create")
-    public String createAccountPage(Authentication authentication, Model model) throws ParseException {
+    public String createAccountPage(Authentication authentication, Model model) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String openDateString = dateFormat.format(new Date());
@@ -62,9 +63,9 @@ public class AccountController {
 
         Account newAccount = new Account();
 
-        String generatedNumber = SecurityController.generateAccountNumber(19);
+        String generatedNumber = SecurityController.generateNumber(19);
         while(accountRepository.findByNumber(generatedNumber).isPresent())
-            generatedNumber = SecurityController.generateAccountNumber(19);
+            generatedNumber = SecurityController.generateNumber(19);
         newAccount.setNumber(generatedNumber);
 
         newAccount.setAmount(BigDecimal.valueOf(0.0));
@@ -158,15 +159,14 @@ public class AccountController {
         return "redirect:/accounts/" + account_id.toString() + "/edit";
     }
 
-
+    @Transactional
     @GetMapping(value = "/accounts/{account_id}/delete")
-    public String deleteCustomer(@PathVariable Long account_id) {
+    public String deleteAccount(@PathVariable Long account_id) {
 
         accountRepository.deleteById(account_id);
 
         return "redirect:/accounts";
     }
-
 
     public Date converterStringToDate(String StringValue) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
