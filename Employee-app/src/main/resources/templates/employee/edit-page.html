@@ -142,9 +142,9 @@
                 <div class="currentEmployee_action" style="text-align: right;">
                     <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
                     <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>&nbsp;
-                    <a th:href="@{/employees/{employee_id}/delete/(employee_id=${currentEmployee.id})}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить сотрудника</a>&nbsp;
-                    <a th:if="${currentEmployee.getActivity().equals(true)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="blockEmployeeBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-ban"></i>&nbsp;&nbsp;Заблокировать</a>&nbsp;
-                    <a th:if="${currentEmployee.getActivity().equals(false)}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="unblockEmployeeBtn btn btn-warning btn-bg" style="width: 12rem; color: white;"><i class="fas fa-unlock"></i>&nbsp;&nbsp;Разблокировать</a>&nbsp;
+                    <a th:if="${loggedEmployee.id != currentEmployee.id}" th:href="@{/employees/{employee_id}/delete/(employee_id=${currentEmployee.id})}" type="button" class="deleteEmployeeBtn btn btn-danger btn-bg" style="width: 13rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить сотрудника</a>&nbsp;
+                    <a th:if="${currentEmployee.getActivity().equals(true)  && loggedEmployee.id != currentEmployee.id}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="blockEmployeeBtn btn btn-danger btn-bg" style="width: 12rem; color: white;"><i class="fas fa-ban"></i>&nbsp;&nbsp;Заблокировать</a>&nbsp;
+                    <a th:if="${currentEmployee.getActivity().equals(false) && loggedEmployee.id != currentEmployee.id}" th:href="@{/employees/{employee_id}/activity/set/(employee_id=${currentEmployee.id})}" type="button" class="unblockEmployeeBtn btn btn-warning btn-bg" style="width: 12rem; color: white;"><i class="fas fa-unlock"></i>&nbsp;&nbsp;Разблокировать</a>&nbsp;
                 </div>
             </form>
 
