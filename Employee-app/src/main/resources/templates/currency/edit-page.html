@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование профиля сотрудника</title>
+    <title>Данные валюты</title>
 
     <!--Basic-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -43,7 +43,7 @@
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_currency')}" th:href="@{/currencies}">Валюты</a>
+                            <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_currency')}" th:href="@{/currencies}">Валюты</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
@@ -82,57 +82,50 @@
         <div class="col"></div>
 
         <div class="col-auto" style="width: 4rem; margin-right: 5rem" >
-            <a th:href="@{/main}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
+            <a th:href="@{/currencies}" type="button" class="btn btn-success btn-bg" style="width: 4rem; color: white; margin-top: 3rem"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-auto" style="width: 70rem" >
 
             <div>
                 <br/>
-                <h5 class="display-4">Редактирование профиля сотрудника</h5>
+                <h5 class="display-4">Данные валюты</h5>
                 <br/><br/>
             </div>
 
-            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования</h5></label>
+            <label for="form"><h5 class="display-4" style="font-size: 20pt">Форма редактирования валюты</h5></label>
             <br/><br/>
 
-            <form th:action="@{/profile/edit}" th:method="POST" th:object="${loggedEmployee}" id="form">
+            <form th:action="@{/currencies/{currency_id}/edit(currency_id = ${currency.id})}" th:method="POST" th:object="${currency}" id="form">
 
-                <label for="firstName">Имя</label>
-                <input class="form-control rounded border input-group-lg" readonly required id="firstName" type="text" th:field="*{firstName}" placeholder="Введите имя" style="width: 250px"/>
+                <label for="name">Название</label>
+                <input class="form-control rounded border input-group-lg" required type="text" id="name" th:field="*{name}" style="width: 300px"/>
                 <br/>
-                <label for="secondName">Фамилия</label>
-                <input class="form-control rounded border input-group-lg" readonly required id="secondName" type="text" th:field="*{secondName}" placeholder="Введите фамилию" style="width: 250px"/>
+                <label for="code">Код</label>
+                <input class="form-control rounded border input-group-lg" required type="text" maxlength="3" id="code" th:field="*{code}" style="width: 300px"/>
                 <br/>
-                <label for="patronymic">Отчество</label>
-                <input class="form-control rounded border input-group-lg" readonly required id="patronymic" type="text" th:field="*{patronymic}" placeholder="Введите отчество" style="width: 250px"/>
-                <br/>
-                <label for="login">Логин</label>
-                <input class="form-control rounded border input-group-lg" readonly required id="login" type="text" th:field="*{login}" placeholder="Введите логин" style="width: 250px"/>
-                <br/>
-                <label for="password">Пароль</label>
-                <input class="form-control rounded border input-group-lg" required id="password" type="password" th:field="*{password}" placeholder="Введите пароль" style="width: 250px"/>
-                <br/>
-                <input required  type="hidden" th:field="*{salt}"/>
-                <label for="rights">Схема прав</label>
-                <input hidden class="form-control rounded border input-group-lg" id="rights" th:name="selectedRights" th:value="${loggedEmployee.rights.id}" />
-                <a class="form-control rounded border input-group-lg" readonly th:text="${loggedEmployee.rights.getName()}" style="width: 250px"></a>
-                <br/>
-                <label for="activity">Состояние аккаунта</label>
-                <div id="activity">
-                    <a th:if="${loggedEmployee.getActivity().equals(true)}" class="form-control rounded border input-group-lg" th:text="Активный" style="width: 250px"></a>
-                    <a th:if="${loggedEmployee.getActivity().equals(false)}" class="form-control rounded border input-group-lg" th:text="Заблокированный" style="width: 250px"></a>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
+                    <strong>Обратите внимание!</strong>
+                    <span>Код валюты состоит не более чем из трёх символов латинского алфавита.</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
+                <label for="sign">Обозначение</label>
+                <input class="form-control rounded border input-group-lg" required type="text" maxlength="1" id="sign" th:field="*{sign}" style="width: 300px"/>
                 <br/>
+                <label for="value">Величина отношения к рублю</label>
+                <input class="form-control rounded border input-group-lg" required type="number" step="any" id="value" th:field="*{value}" style="width: 300px"/>
+                <br/>
+                <br/>
+                <div class="currentCurrency_action" style="text-align: right;">
+                    <button type="submit" class="btn btn-success btn-bg" style="width: 10rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>&nbsp;
+                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 10rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
+                    <a th:href="@{/currencies/{currency_id}/delete/(currency_id=${currency.id})}" type="button" class="deleteCurrencyBtn btn btn-danger btn-bg" style="width: 11rem; color: white;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Удалить валюту</a>
+                </div>
 
-                <div class="currentEmployee_action" style="text-align: right;">
-                    <button type="submit" class="btn btn-success btn-bg" style="width: 9rem; color: white;"><i class="far fa-save"></i>&nbsp;&nbsp;Сохранить</button>
-                    <button type="reset" class="btn btn-secondary btn-bg" style="width: 9rem; color: white;"><i class="fas fa-undo"></i>&nbsp;&nbsp;Отменить</button>
-                </div>
             </form>
-
             <br/>
-
         </div>
 
         <div class="col-auto" style="width: 4rem;"></div>
@@ -142,10 +135,60 @@
 </div>
 
 
+<!-- Modal popup - delete current currency-->
+<div class="deleteCurrencyForm">
+    <div class="modal fade" id="deleteCurrencyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="text-align: right;margin-right: 20px;"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCurrencyModalLabel">Удаление валюты</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger" >
+                        Вы действительно хотите удалить данную валюту?
+                    </p>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="font-size: 10pt">
+                        <strong>Обратите внимание!</strong>
+                        <span>
+                            <span th:if="${!accountWithCurrencyChecker}">Данная валюта не используется. Удаление возможно.</span>
+                            <span th:if="${accountWithCurrencyChecker}">Данная валюта используется. Удаление невозможно.</span>
+                        </span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <a th:if="${!accountWithCurrencyChecker}" href="" class="btn btn-danger" id="delRef">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--Basic-->
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+
+<!--modal popup script to delete current currency-->
+<script>
+    $(document).ready(function () {
+        $('.currentCurrency_action .deleteCurrencyBtn ').on('click', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#deleteCurrencyModal #delRef').attr('href', href);
+            $('#deleteCurrencyModal').modal();
+        })
+    });
+</script>
 
 
 </body>

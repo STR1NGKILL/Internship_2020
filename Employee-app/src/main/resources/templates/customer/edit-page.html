@@ -42,6 +42,9 @@
                         <li class="nav-item">
                             <a class="nav-link" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_currency')}" th:href="@{/currencies}">Валюты</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">
@@ -173,7 +176,7 @@
     </div>
 </div>
 
-<!-- Modal popup - delete the current customer-->
+<!-- Modal popup - delete current customer-->
 <div class="deleteCustomerForm">
     <div class="modal fade" id="deleteCustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div style="text-align: right;margin-right: 20px;"></div>

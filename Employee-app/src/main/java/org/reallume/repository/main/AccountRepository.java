@@ -19,4 +19,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 
     void deleteById(Long id);
 
+    Optional<Account> findByCurrency_Id(Integer id);
+
 }

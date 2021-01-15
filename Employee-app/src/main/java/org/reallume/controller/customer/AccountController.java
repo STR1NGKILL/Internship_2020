@@ -90,7 +90,7 @@ public class AccountController {
 
     @PostMapping(value = "/accounts/create")
     public String createAccount(@ModelAttribute Account newAccount,
-                                 @RequestParam String openDateString, @RequestParam String closeDateString, @RequestParam Long selectedCustomer, @RequestParam Byte selectedCurrency) throws ParseException {
+                                 @RequestParam String openDateString, @RequestParam String closeDateString, @RequestParam Long selectedCustomer, @RequestParam Integer selectedCurrency) throws ParseException {
 
         newAccount.setOpenDate(converterStringToDate(openDateString));
         newAccount.setCloseDate(converterStringToDate(closeDateString));
@@ -112,7 +112,7 @@ public class AccountController {
         String openDateString = dateFormat.format(account.getOpenDate());
         String closeDateString = dateFormat.format(account.getCloseDate());
 
-        Byte selectedCurrencyId = account.getCurrency().getId();
+        Integer selectedCurrencyId = account.getCurrency().getId();
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

@@ -56,12 +56,13 @@ public class XmlReaderAndDbUploaderCurrencies {
 
                 String id = element.getElementsByTagName("Id").item(0).getChildNodes().item(0).getNodeValue();
                 String name = element.getElementsByTagName("Name").item(0).getChildNodes().item(0).getNodeValue();
+                String code = element.getElementsByTagName("Code").item(0).getChildNodes().item(0).getNodeValue();
                 String sign = element.getElementsByTagName("Sign").item(0).getChildNodes().item(0).getNodeValue();
                 String value = element.getElementsByTagName("Value").item(0).getChildNodes().item(0).getNodeValue();
 
                 queries.add(
-                        "INSERT INTO currencies(id,name,sign,value) " +
-                                "VALUES ('" + id + "','" + name + "','" + sign + "','" + value + "') ON CONFLICT DO NOTHING ;");
+                        "INSERT INTO currencies(id,name,code,sign,value) " +
+                                "VALUES ('" + id + "','" + name + "','" + code + "','"  + sign + "','" + value + "') ON CONFLICT DO NOTHING ;");
             }
 
         }

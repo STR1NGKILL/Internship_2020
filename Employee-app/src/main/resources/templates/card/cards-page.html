@@ -45,6 +45,10 @@
                         <li class="nav-item">
                             <a class="nav-link active" th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}">Карты</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${authorities.contains('create_edit_delete_currency')}" th:href="@{/currencies}">Валюты</a>
+                        </li>
+
                     </ul>
                     <ul class="navbar-nav ml-auto " style="width: auto; margin-right: 1rem">
                         <li class="nav-item text-light">

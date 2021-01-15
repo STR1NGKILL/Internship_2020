@@ -4,18 +4,21 @@
     <Currency>
         <Id>0</Id>
         <Name>Рубль</Name>
+        <Code>RUB</Code>
         <Sign>₽</Sign>
         <Value>1</Value>
     </Currency>
     <Currency>
         <Id>1</Id>
         <Name>Евро</Name>
+        <Code>EUR</Code>
         <Sign>€</Sign>
         <Value>90.56</Value>
     </Currency>
     <Currency>
         <Id>2</Id>
         <Name>Доллар</Name>
+        <Code>USD</Code>
         <Sign>$</Sign>
         <Value>73.72</Value>
     </Currency>

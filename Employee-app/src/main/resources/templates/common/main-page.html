@@ -71,7 +71,7 @@
                 <a th:if="${authorities.contains('create_edit_delete_rights')}" th:href="@{/rights}" th:text="Права" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
                 <a th:if="${authorities.contains('create_edit_delete_account')}" th:href="@{/accounts}" th:text="Счета" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
                 <a th:if="${authorities.contains('create_edit_delete_card')}" th:href="@{/cards}" th:text="Карты" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
-                <a th:if="${authorities.contains('create_edit_delete_currency')}" href="#" th:text="Валюта" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
+                <a th:if="${authorities.contains('create_edit_delete_currency')}" th:href="@{/currencies}" th:text="Валюты" class="list-group-item list-group-item-action border-top-0 border-left-0 border-right-0 text-truncate"></a>
             </div>
         </div>
         <div class="col-auto" style="width: 79rem"></div>
