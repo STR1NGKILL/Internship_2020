@@ -16,24 +16,22 @@
 * закрытие карты клиента;
 * изменение сотрудником своего пароля;
 * редактирование валюты.
-<br />
-<br />
+  
 #### Руководство по запуску:
-1) Если у Вас уже есть обе необходимые БД, необходимо заменить данные БД в application.properties во всех модулях. В модуле buildSrc в классе FirstLaunchTaskSet также необходимо заменить значения полей на свои.
-2) Далее необходимо инициализировать схему каждой БД запуском EmployeeВbInitialization (модуль Employee-db-initialization) и MainDbInitialization(модуль Main-db-initialization).
-3) Следует внести первичные данные в БД запуском задачи FirstLaunchTaskSet в build.gradle модуля Employee-app.
-4) Можно запускать EmployeeApplication (модуль Employee-app).
-5) Пароли и логины учётных записей для первого входа прописаны в buildSrc/src/main/resources/employees.xml.
-<br />
-<br />
+1. Если у Вас уже есть обе необходимые БД, необходимо заменить данные БД в application.properties во всех модулях. В модуле buildSrc в классе FirstLaunchTaskSet также необходимо заменить значения полей на свои.  
+2. Далее необходимо инициализировать схему каждой БД запуском EmployeeВbInitialization (модуль Employee-db-initialization) и MainDbInitialization(модуль Main-db-initialization).  
+3. Следует внести первичные данные в БД запуском задачи FirstLaunchTaskSet в build.gradle модуля Employee-app.  
+4. Можно запускать EmployeeApplication (модуль Employee-app).  
+5. Пароли и логины учётных записей для первого входа прописаны в buildSrc/src/main/resources/employees.xml.  
+
 #### Примеры UI веб-приложения:
-![alt text](src/main/resources/readme_images/screenshot_1.png "Главная страница")
+![Alt-текст](src/main/resources/readme_images/screenshot_1.png "Главная страница")
 
-![alt text](src/main/resources/readme_images/screenshot_2.png "Страница обозревателя валют")
+![Alt-текст](src/main/resources/readme_images/screenshot_2.png "Страница обозревателя валют")
 
-![alt text](src/main/resources/readme_images/screenshot_3.png "Страница редактирования схемы прав")
+![Alt-текст](src/main/resources/readme_images/screenshot_3.png "Страница редактирования схемы прав")
 
-![alt text](src/main/resources/readme_images/screenshot_4.png "Страница редактирования сотрудника")
+![Alt-текст](src/main/resources/readme_images/screenshot_4.png "Страница редактирования сотрудника")
 
 
 
