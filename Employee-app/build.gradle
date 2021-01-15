@@ -20,6 +20,10 @@ repositories {
 
 task RunReadingXmlWithActionsOfRights(type: RunReadingXmlWithActionsOfRights)
 task RunReadingXmlWithCurrencies(type: RunReadingXmlWithCurrencies)
+task RunReadingXmlWithRights(type: RunReadingXmlWithRights)
+task RunReadingXmlWithEmployees(type: RunReadingXmlWithEmployees)
+
+task FirstLaunchTaskSet(type: FirstLaunchTaskSet)
 
 
 dependencies {

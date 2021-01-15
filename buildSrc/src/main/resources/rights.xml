@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Rights>
+    <Right>
+        <Id>0</Id>
+        <Name>Администратор</Name>
+
+    </Right>
+    <Right>
+        <Id>1</Id>
+        <Name>Пользователь</Name>
+    </Right>
+</Rights>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Employees>
+    <Employee>
+        <Id>0</Id>
+        <First_Name>Сергей</First_Name>
+        <Second_Name>Ершов</Second_Name>
+        <Patronymic>Владимирович</Patronymic>
+        <Login>admin</Login>
+        <Password>$2a$10$0TgUomQLp3LziB8YmNN/.O2ghlUU09RpnRhT3M3HyCjQ9rZRLMwLG</Password>
+        <Salt>af1f9987c93d4f</Salt>
+        <Activity>true</Activity>
+        <Rights>0</Rights>
+    </Employee>
+    <Employee>
+        <Id>1</Id>
+        <First_Name>Кирилл</First_Name>
+        <Second_Name>Ушаков</Second_Name>
+        <Patronymic>Сергеевич</Patronymic>
+        <Login>user</Login>
+        <Password>$2a$10$Bd501OaJRmQ16X8Mu8SSUuOFBBghpH.v2PIVYvajYbhRRAyIei/Ri</Password>
+        <Salt>f8068021e9114f</Salt>
+        <Activity>true</Activity>
+        <Rights>1</Rights>
+    </Employee>
+</Employees>
+
+<!--Пароль для обоих 4145-->
