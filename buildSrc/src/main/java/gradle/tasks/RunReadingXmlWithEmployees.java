@@ -13,6 +13,6 @@ public class RunReadingXmlWithEmployees  extends DefaultTask {
 
     @TaskAction
     public void run() throws SAXException, ParserConfigurationException, SQLException, IOException {
-        InsertARecordToTheTableEmployees insertARecordToTheTableEmployees = new InsertARecordToTheTableEmployees("/employees.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/EmployeeDb2", "postgres", "4145");
+        new InsertARecordToTheTableEmployees("/employees.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/EmployeeDb2", "postgres", "4145");
     }
 }

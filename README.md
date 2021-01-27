@@ -17,7 +17,7 @@
 * изменение сотрудником своего пароля;
 * редактирование валюты.
   
-#### Руководство по запуску:
+#### Руководство по развёртке:
 1. Если у Вас уже есть обе необходимые БД, необходимо заменить данные БД в application.properties во всех модулях. В модуле buildSrc в классе FirstLaunchTaskSet также необходимо заменить значения полей на свои.  
 2. Далее необходимо инициализировать схему каждой БД запуском EmployeeВbInitialization (модуль Employee-db-initialization) и MainDbInitialization(модуль Main-db-initialization).  
 3. Следует внести первичные данные в БД запуском задачи FirstLaunchTaskSet в build.gradle модуля Employee-app.  

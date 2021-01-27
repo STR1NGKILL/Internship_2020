@@ -47,7 +47,6 @@ dependencies {
 
     //postgresql
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
-    runtime('org.postgresql:postgresql')
 
     //liquibase
     compile('org.liquibase:liquibase-core')

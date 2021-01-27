@@ -13,6 +13,6 @@ public class RunReadingXmlWithRights  extends DefaultTask {
 
     @TaskAction
     public void run() throws SAXException, ParserConfigurationException, SQLException, IOException {
-        InsertARecordToTheTableRights insertARecordToTheTableRights = new InsertARecordToTheTableRights("/rights.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/EmployeeDb2", "postgres", "4145");
+        new InsertARecordToTheTableRights("/rights.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/EmployeeDb2", "postgres", "4145");
     }
 }

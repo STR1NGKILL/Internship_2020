@@ -31,15 +31,15 @@ public class SecurityController extends HttpServlet {
 
     public static String generatePassword(){
         String password = UUID.randomUUID().toString();
-        password = password.substring(0, password.length() - 15);
         password = password.replace("-", "");
+        password = password.substring(0, password.length() - 15);
         return password;
     }
 
     public static String generateSalt(){
         String salt = UUID.randomUUID().toString();
-        salt = salt.substring(0, salt.length() - 20);
         salt = salt.replace("-", "");
+        salt = salt.substring(0, salt.length() - 20);
         return salt;
     }
 

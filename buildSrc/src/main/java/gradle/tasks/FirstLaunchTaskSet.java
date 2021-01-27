@@ -19,15 +19,15 @@ public class FirstLaunchTaskSet extends DefaultTask {
             PATH_TO_DB1 = "jdbc:postgresql://localhost:5432/MainDb",
             PATH_TO_DB2 = "jdbc:postgresql://localhost:5432/EmployeeDb",
             LOGIN = "postgres",
-            PASSWORD = "1234";
+            PASSWORD = "4145";
 
 
     @TaskAction
     public void run() throws SAXException, ParserConfigurationException, SQLException, IOException {
-        XmlReaderAndDbUploaderActions xmlReaderAndDbUploaderAction = new XmlReaderAndDbUploaderActions("/actions.xml", DRIVER_NAME, PATH_TO_DB2, LOGIN, PASSWORD);
-        XmlReaderAndDbUploaderCurrencies xmlReaderAndDbUploaderCurrencies = new XmlReaderAndDbUploaderCurrencies("/currencies.xml", DRIVER_NAME, PATH_TO_DB1, LOGIN, PASSWORD);
-        InsertARecordToTheTableRights insertARecordToTheTableRights = new InsertARecordToTheTableRights("/rights.xml", DRIVER_NAME, PATH_TO_DB2, LOGIN, PASSWORD);
-        InsertARecordToTheTableEmployees insertARecordToTheTableEmployees = new InsertARecordToTheTableEmployees("/employees.xml", DRIVER_NAME, PATH_TO_DB2, LOGIN, PASSWORD);
+        new XmlReaderAndDbUploaderActions("/actions.xml", DRIVER_NAME, PATH_TO_DB2, LOGIN, PASSWORD);
+        new XmlReaderAndDbUploaderCurrencies("/currencies.xml", DRIVER_NAME, PATH_TO_DB1, LOGIN, PASSWORD);
+        new InsertARecordToTheTableRights("/rights.xml", DRIVER_NAME, PATH_TO_DB2, LOGIN, PASSWORD);
+        new InsertARecordToTheTableEmployees("/employees.xml", DRIVER_NAME, PATH_TO_DB2, LOGIN, PASSWORD);
     }
 
 }

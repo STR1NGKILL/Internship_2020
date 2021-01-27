@@ -62,8 +62,8 @@ public class InsertARecordToTheTableEmployees {
                 String second_name = element.getElementsByTagName("Second_Name").item(0).getChildNodes().item(0).getNodeValue();
                 String patronymic = element.getElementsByTagName("Patronymic").item(0).getChildNodes().item(0).getNodeValue();
                 String login = element.getElementsByTagName("Login").item(0).getChildNodes().item(0).getNodeValue();
-                String password = element.getElementsByTagName("Password").item(0).getChildNodes().item(0).getNodeValue();  //password will be got further, but this row is necessary for the correct reading
-                String salt = element.getElementsByTagName("Salt").item(0).getChildNodes().item(0).getNodeValue();          //salt gonna be generated further too, but this row is necessary for the correct reading
+                String password = element.getElementsByTagName("Password").item(0).getChildNodes().item(0).getNodeValue(); 
+                String salt = element.getElementsByTagName("Salt").item(0).getChildNodes().item(0).getNodeValue();
                 String activity = element.getElementsByTagName("Activity").item(0).getChildNodes().item(0).getNodeValue();
                 String rights = element.getElementsByTagName("Rights").item(0).getChildNodes().item(0).getNodeValue();
 

@@ -13,6 +13,6 @@ public class RunReadingXmlWithCurrencies extends DefaultTask {
 
     @TaskAction
     public void run() throws SAXException, ParserConfigurationException, SQLException, IOException {
-        XmlReaderAndDbUploaderCurrencies xmlReaderAndDbUploaderCurrencies = new XmlReaderAndDbUploaderCurrencies("/currencies.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/MainDb", "postgres", "4145");
+        new XmlReaderAndDbUploaderCurrencies("/currencies.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/MainDb", "postgres", "4145");
     }
 }

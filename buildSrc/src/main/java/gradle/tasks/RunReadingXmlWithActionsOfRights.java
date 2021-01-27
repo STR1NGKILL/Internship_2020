@@ -13,6 +13,6 @@ public class RunReadingXmlWithActionsOfRights extends DefaultTask {
 
     @TaskAction
     public void run() throws SAXException, ParserConfigurationException, SQLException, IOException {
-        XmlReaderAndDbUploaderActions xmlReaderAndDbUploaderAction = new XmlReaderAndDbUploaderActions("/actions.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/EmployeeDb", "postgres", "4145");
+        new XmlReaderAndDbUploaderActions("/actions.xml","org.postgresql.Driver", "jdbc:postgresql://localhost:5432/EmployeeDb", "postgres", "4145");
     }
 }
