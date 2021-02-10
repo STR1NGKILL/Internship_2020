@@ -133,7 +133,7 @@ public class AccountController {
 
     @PostMapping(value = "/accounts/{account_id}/edit")
     public String editAccount(@PathVariable Long account_id,
-                                @RequestParam String openDateString, @RequestParam String closeDateString, @RequestParam Long selectedCustomer, @RequestParam Byte selectedCurrency) throws ParseException {
+                                @RequestParam String openDateString, @RequestParam String closeDateString, @RequestParam Long selectedCustomer, @RequestParam Integer selectedCurrency) throws ParseException {
 
         Account originAccount = accountRepository.findById(account_id).get();
 
